@@ -231,6 +231,23 @@
     mainNav.classList.toggle("open");
   });
 
+  // Close menu when tapping outside on mobile/tablet
+  document.addEventListener("click", (event) => {
+    const clickedInsideNav = mainNav.contains(event.target);
+    const clickedHamburger = hamburger.contains(event.target);
+
+    if (!clickedInsideNav && !clickedHamburger) {
+      mainNav.classList.remove("open");
+    }
+  });
+
+  // Ensure nav resets to desktop state after orientation or width changes
+  window.addEventListener("resize", () => {
+    if (window.innerWidth > 1100) {
+      mainNav.classList.remove("open");
+    }
+  });
+
   // Close nav when a link is clicked
   $$("#mainNav a").forEach((link) => {
     link.addEventListener("click", () => mainNav.classList.remove("open"));
