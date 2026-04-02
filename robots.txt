@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://teethcaredentalbangalore.netlify.app/sitemap.xml
