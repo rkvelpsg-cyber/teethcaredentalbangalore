@@ -1,6 +1,6 @@
 <?php
 /**
- * Teeth Care Dental Clinic – Enquiry Form Email Handler
+ * ASIAN DENTAL CLINIC – Enquiry Form Email Handler
  * Receives POST from enquiry form and emails it to the clinic admin.
  *
  * SETUP:
@@ -17,7 +17,7 @@ header('Access-Control-Allow-Methods: POST');
 
 /* ── Configuration ──────────────────────────── */
 $adminEmail   = 'admin@teethcaredental.com';   // <-- Change to clinic email
-$clinicName   = 'Teeth Care Dental Clinic';
+$clinicName   = 'ASIAN DENTAL CLINIC';
 $allowedOrigin = '';  // Set to your domain, e.g. 'https://teethcaredental.com'
 
 /* ── Security: only accept POST ──────────────── */
@@ -109,8 +109,8 @@ Please follow up with the patient promptly.
 
 ──
 {$clinicName}
-9, Balagere Main Rd, Varthur, Bengaluru – 560087
-Phone: +91-8073601660
+Srimad Dathathreya Ashrama Rd, M V Extenstion, Hoskote, Karnataka 562114
+Phone: +91-9663252315
 ──
 This is an automated notification. Do not reply to this email directly.
 EMAIL;
@@ -145,7 +145,7 @@ $bodyHtml = "
     </tr>
     <tr>
       <td style='background:#0f172a;padding:20px 36px;text-align:center;'>
-        <p style='color:rgba(255,255,255,.6);font-size:.8rem;margin:0;'>{$clinicName} | 9, Balagere Main Rd, Varthur, Bengaluru – 560087 | +91-8073601660</p>
+        <p style='color:rgba(255,255,255,.6);font-size:.8rem;margin:0;'>{$clinicName} | Srimad Dathathreya Ashrama Rd, M V Extenstion, Hoskote, Karnataka 562114 | +91-9663252315</p>
       </td>
     </tr>
   </table>
@@ -184,7 +184,7 @@ $sent = mail($adminEmail, $subject, $multipartBody, $headers);
 /* Also send a confirmation email to the patient */
 if ($sent) {
     $confirmSubject = "We received your enquiry – {$clinicName}";
-    $confirmBody    = "Dear {$name},\n\nThank you for reaching out to {$clinicName}!\n\nWe have received your enquiry and one of our team members will contact you at {$phone} within 24 hours.\n\nIf you need immediate assistance, please call us:\n📞 +91-8073601660\n\nWarm regards,\nTeam {$clinicName}\n9, Balagere Main Rd, Varthur, Bengaluru – 560087\n";
+    $confirmBody    = "Dear {$name},\n\nThank you for reaching out to {$clinicName}!\n\nWe have received your enquiry and one of our team members will contact you at {$phone} within 24 hours.\n\nIf you need immediate assistance, please call us:\n📞 +91-9663252315\n\nWarm regards,\nTeam {$clinicName}\nSrimad Dathathreya Ashrama Rd, M V Extenstion, Hoskote, Karnataka 562114\n";
     $confirmHeaders = "From: {$clinicName} <noreply@teethcaredental.com>\r\nContent-Type: text/plain; charset=UTF-8";
     @mail($email, $confirmSubject, $confirmBody, $confirmHeaders);
 
