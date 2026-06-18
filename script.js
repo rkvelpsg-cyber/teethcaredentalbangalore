@@ -59,6 +59,31 @@
   const errorMsg = $("#formError");
   const submitBtn = $("#enquirySubmit");
 
+  const whatsappNumber = "919663252315";
+
+  function buildWhatsAppUrl() {
+    const name = $("#eName").value.trim();
+    const phone = $("#ePhone").value.trim();
+    const email = $("#eEmail").value.trim();
+    const message = $("#eMessage").value.trim();
+
+    const whatsappMessage = [
+      "Hello ASIAN DENTAL CLINIC,",
+      "I would like to book a consultation.",
+      "",
+      `Name: ${name}`,
+      `Phone: ${phone}`,
+      `Email: ${email}`,
+      message ? `Message: ${message}` : null,
+    ]
+      .filter(Boolean)
+      .join("\n");
+
+    return `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
+      whatsappMessage,
+    )}`;
+  }
+
   function showFieldError(fieldId, errId, message) {
     const field = $("#" + fieldId);
     const err = $("#" + errId);
@@ -166,30 +191,28 @@
 
     // Disable button while submitting
     submitBtn.disabled = true;
-    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending…';
-
-    const formData = new FormData(form);
-    formData.set("form-name", form.getAttribute("name") || "enquiry");
+    submitBtn.innerHTML = '<i class="fab fa-whatsapp"></i> Opening WhatsApp…';
 
     try {
-      const response = await fetch("/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: new URLSearchParams(formData).toString(),
-      });
-
-      if (response.ok) {
-        form.reset();
-        successMsg.classList.remove("hidden");
-        // Auto-close modal after success
-        setTimeout(closeModal, 3500);
-      } else {
+      const whatsappUrl = buildWhatsAppUrl();
+      const whatsappWindow = window.open(
+        whatsappUrl,
+        "_blank",
+        "noopener,noreferrer",
+      );
+      if (!whatsappWindow) {
+        errorMsg.textContent =
+          "Your browser blocked the WhatsApp tab. Please allow pop-ups and try again.";
         errorMsg.classList.remove("hidden");
+        return;
       }
+      form.reset();
+      successMsg.innerHTML =
+        '<i class="fab fa-whatsapp"></i> WhatsApp opened in a new tab. Please send the message to complete the enquiry.';
+      successMsg.classList.remove("hidden");
+      setTimeout(closeModal, 3500);
     } catch (err) {
-      console.warn("Enquiry form submission failed.", err);
+      console.warn("WhatsApp enquiry handoff failed.", err);
       errorMsg.classList.remove("hidden");
     } finally {
       submitBtn.disabled = false;
@@ -294,6 +317,117 @@
 
   const heroSection = $("#home");
   if (heroSection) heroObserver.observe(heroSection);
+
+  /* ════════════════════════════════════════════
+     BIO EXPAND / COLLAPSE
+  ════════════════════════════════════════════ */
+  $$("[data-target]").forEach((btn) => {
+    if (!btn.classList.contains("bio-expand-btn")) return;
+    btn.addEventListener("click", () => {
+      const bio = document.getElementById(btn.dataset.target);
+      if (!bio) return;
+      const isOpen = bio.classList.toggle("expanded");
+      btn.classList.toggle("open", isOpen);
+      btn.innerHTML = isOpen
+        ? 'Show Less <i class="fas fa-chevron-up"></i>'
+        : 'Explore More <i class="fas fa-chevron-down"></i>';
+    });
+  });
+
+  /* ════════════════════════════════════════════
+     GALLERY CAROUSEL AUTO-SCROLL (Parabolic)
+  ════════════════════════════════════════════ */
+  const galleryTrack = $("#galleryTrack");
+  const galleryWrap = $("#galleryCarousel");
+
+  if (galleryTrack && galleryWrap) {
+    const items = $$(".gallery-item", galleryTrack);
+    const total = items.length;
+
+    if (total > 0) {
+      let activeIndex = 0;
+      let autoTimer = null;
+
+      function normalize(index) {
+        return (index + total) % total;
+      }
+
+      function paintPositions() {
+        items.forEach((item) => {
+          item.classList.remove(
+            "is-center",
+            "is-left",
+            "is-right",
+            "is-far-left",
+            "is-far-right",
+            "is-hidden",
+          );
+          item.classList.add("is-hidden");
+        });
+
+        const applyRole = (idx, roleClass) => {
+          const item = items[normalize(idx)];
+          if (!item) return;
+          item.classList.remove("is-hidden");
+          item.classList.add(roleClass);
+        };
+
+        applyRole(activeIndex, "is-center");
+        applyRole(activeIndex - 1, "is-left");
+        applyRole(activeIndex + 1, "is-right");
+        applyRole(activeIndex - 2, "is-far-left");
+        applyRole(activeIndex + 2, "is-far-right");
+      }
+
+      function nextSlide() {
+        activeIndex = normalize(activeIndex + 1);
+        paintPositions();
+      }
+
+      function prevSlide() {
+        activeIndex = normalize(activeIndex - 1);
+        paintPositions();
+      }
+
+      function startAuto() {
+        if (autoTimer) return;
+        autoTimer = setInterval(nextSlide, 2600);
+      }
+
+      function stopAuto() {
+        if (!autoTimer) return;
+        clearInterval(autoTimer);
+        autoTimer = null;
+      }
+
+      items.forEach((item, idx) => {
+        item.addEventListener("click", () => {
+          if (
+            item.classList.contains("is-left") ||
+            item.classList.contains("is-far-left")
+          ) {
+            prevSlide();
+            return;
+          }
+          if (
+            item.classList.contains("is-right") ||
+            item.classList.contains("is-far-right")
+          ) {
+            nextSlide();
+            return;
+          }
+          activeIndex = idx;
+          paintPositions();
+        });
+      });
+
+      galleryWrap.addEventListener("mouseenter", stopAuto);
+      galleryWrap.addEventListener("mouseleave", startAuto);
+
+      paintPositions();
+      startAuto();
+    }
+  }
 
   /* ════════════════════════════════════════════
      TESTIMONIALS SLIDER (auto-play)
