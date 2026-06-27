@@ -505,43 +505,44 @@ textarea:focus-visible {
   flex-shrink: 0;
 }
 
-.header-social-links {
+.header-social {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 8px;
   flex-shrink: 0;
 }
 
-.header-social-links a {
-  width: 40px;
-  height: 40px;
+.header-social a {
+  width: 32px;
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.85rem;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.1);
   transition: var(--transition);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
-.header-social-links a:hover {
+.header-social a:hover {
   background: var(--primary);
   color: #fff;
   border-color: var(--primary);
   transform: translateY(-2px);
 }
 
-#mainHeader.scrolled .header-social-links a {
-  background: rgba(14, 165, 233, 0.1);
+#mainHeader.scrolled .header-social a {
+  background: rgba(14, 165, 233, 0.08);
   color: var(--primary);
   border-color: var(--primary-light);
 }
 
-#mainHeader.scrolled .header-social-links a:hover {
+#mainHeader.scrolled .header-social a:hover {
   background: var(--primary);
   color: #fff;
+  border-color: var(--primary);
 }
 
 .hamburger {
@@ -1926,7 +1927,7 @@ textarea:focus-visible {
   .btn-appt {
     display: none;
   }
-  .header-social-links {
+  .header-social {
     display: none;
   }
 }
