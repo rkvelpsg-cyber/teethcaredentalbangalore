@@ -770,8 +770,8 @@
             
             <!-- Header Section with Logo -->
             <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 25px; padding-bottom: 20px; border-bottom: 3px solid #0f766e;">
-              <div style="flex: 1;">
-                <img src="assets/Clinic_logo_iamge.jpeg" style="height: 80px; width: 80px; object-fit: contain; margin-right: 20px;" alt="Clinic Logo" />
+              <div style="flex: 1; text-align: center;">
+                <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f9b7.png" style="height: 90px; width: 90px; object-fit: contain;" alt="Clinic Logo" />
               </div>
               <div style="flex: 2; text-align: center;">
                 <h1 style="margin: 0; color: #0f766e; font-size: 28px; font-weight: bold;">ASIAN DENTAL CLINIC</h1>
@@ -886,7 +886,12 @@
           margin: [10, 10, 10, 10],
           filename: `prescription_${prescription.patientName}_${Date.now()}.pdf`,
           image: { type: "jpeg", quality: 0.98 },
-          html2canvas: { scale: 2, logging: false, useCORS: true, allowTaint: true },
+          html2canvas: {
+            scale: 2,
+            logging: false,
+            useCORS: true,
+            allowTaint: true,
+          },
           jsPDF: { orientation: "portrait", unit: "mm", format: "a4" },
         };
 
