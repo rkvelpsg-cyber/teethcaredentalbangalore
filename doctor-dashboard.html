@@ -851,9 +851,15 @@
           margin: 0,
           filename: `prescription_${prescription.patientName}_${Date.now()}.pdf`,
           image: { type: "jpeg", quality: 0.98 },
-          html2canvas: { scale: 2, logging: false, useCORS: true, allowTaint: true, windowHeight: 1400 },
+          html2canvas: {
+            scale: 2,
+            logging: false,
+            useCORS: true,
+            allowTaint: true,
+            windowHeight: 1400,
+          },
           jsPDF: { orientation: "portrait", unit: "mm", format: "a4" },
-          pagebreak: { mode: ["avoid-all", "css", "legacy"] }
+          pagebreak: { mode: ["avoid-all", "css", "legacy"] },
         };
 
         html2pdf().set(opt).from(element).save();
