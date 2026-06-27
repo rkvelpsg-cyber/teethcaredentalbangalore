@@ -35,6 +35,11 @@
         color: #fff;
         padding: 30px 20px;
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        position: sticky;
+        top: 0;
       }
 
       .sidebar-header {
@@ -52,6 +57,7 @@
 
       .sidebar-menu {
         list-style: none;
+        flex: 1;
       }
 
       .sidebar-menu li {
@@ -77,10 +83,9 @@
       }
 
       .sidebar-footer {
-        position: absolute;
-        bottom: 20px;
-        left: 20px;
-        right: 20px;
+        margin-top: auto;
+        padding-top: 20px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
       }
 
       .logout-btn {
@@ -322,10 +327,12 @@
         display: flex;
         gap: 12px;
         margin-top: 24px;
+        flex-wrap: nowrap;
       }
 
       .btn-primary {
         flex: 1;
+        min-width: 150px;
         padding: 12px;
         background: linear-gradient(135deg, #059669 0%, #047857 100%);
         color: #fff;
@@ -343,6 +350,7 @@
 
       .btn-secondary {
         flex: 1;
+        min-width: 150px;
         padding: 12px;
         background: #f5f5f5;
         color: #0f172a;
@@ -395,23 +403,43 @@
         }
 
         .sidebar {
-          padding: 20px;
-          display: flex;
+          height: auto;
+          flex-direction: row;
           justify-content: space-between;
           align-items: center;
+          padding: 20px;
+          position: relative;
+        }
+
+        .sidebar-header {
+          margin-bottom: 0;
         }
 
         .sidebar-menu {
           display: flex;
+          flex: 1;
           gap: 10px;
+          margin: 0 20px;
         }
 
         .sidebar-footer {
-          position: static;
+          margin-top: 0;
+          padding-top: 0;
+          border-top: none;
         }
 
         .form-grid {
           grid-template-columns: 1fr;
+        }
+
+        .form-actions {
+          flex-direction: column;
+        }
+
+        .btn-primary,
+        .btn-secondary {
+          width: 100%;
+          min-width: unset;
         }
       }
     </style>
