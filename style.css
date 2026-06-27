@@ -532,6 +532,10 @@ textarea:focus-visible {
   background: linear-gradient(135deg, #059669 0%, #047857 100%);
 }
 
+.nav-doctor-login {
+  display: none;
+}
+
 .header-social {
   display: flex;
   align-items: center;
@@ -1948,10 +1952,28 @@ textarea:focus-visible {
   #mainNav a:hover {
     background: rgba(255, 255, 255, 0.1) !important;
   }
+  .nav-doctor-login {
+    display: list-item;
+  }
+  .nav-doctor-login a {
+    background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
+    color: #fff !important;
+    font-weight: 600;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .nav-doctor-login a:hover {
+    background: linear-gradient(135deg, #047857 0%, #065f46 100%) !important;
+  }
   .hamburger {
     display: flex;
   }
   .btn-appt {
+    display: none;
+  }
+  .btn-doctor {
     display: none;
   }
   .header-social {
