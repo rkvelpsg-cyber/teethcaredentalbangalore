@@ -442,6 +442,240 @@
           min-width: unset;
         }
       }
+
+      @media (max-width: 768px) {
+        .main-content {
+          padding: 20px;
+        }
+
+        .top-bar {
+          flex-direction: column;
+          gap: 16px;
+          text-align: center;
+          padding: 16px;
+        }
+
+        .top-bar h1 {
+          font-size: 1.4rem;
+        }
+
+        .sidebar {
+          flex-wrap: wrap;
+          gap: 10px;
+        }
+
+        .sidebar-header {
+          min-width: 100%;
+          margin-bottom: 10px;
+        }
+
+        .sidebar-menu {
+          flex-wrap: wrap;
+          flex: 1;
+          gap: 8px;
+          margin: 0;
+        }
+
+        .sidebar-menu a {
+          padding: 8px 10px;
+          font-size: 0.8rem;
+          flex: 0 0 auto;
+        }
+
+        .sidebar-footer {
+          min-width: 100%;
+          padding-top: 10px;
+          border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logout-btn {
+          padding: 8px;
+          font-size: 0.85rem;
+        }
+
+        .stats-grid {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 15px;
+          margin-bottom: 20px;
+        }
+
+        .stat-card {
+          padding: 15px;
+        }
+
+        .stat-value {
+          font-size: 1.5rem;
+        }
+
+        .stat-label {
+          font-size: 0.75rem;
+        }
+
+        .appointments-grid {
+          grid-template-columns: 1fr;
+          gap: 15px;
+        }
+
+        .appointment-card {
+          padding: 15px;
+        }
+
+        .prescription-form {
+          padding: 20px;
+        }
+
+        .form-header {
+          flex-direction: column;
+          gap: 12px;
+          align-items: flex-start;
+        }
+
+        .form-header button {
+          margin-left: 0;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+          font-size: 16px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .main-content {
+          padding: 12px;
+        }
+
+        .top-bar {
+          padding: 12px;
+          gap: 12px;
+        }
+
+        .top-bar h1 {
+          font-size: 1.2rem;
+        }
+
+        .sidebar {
+          padding: 12px;
+          gap: 8px;
+        }
+
+        .sidebar-header {
+          font-size: 1rem;
+        }
+
+        .sidebar-header i {
+          font-size: 1.4rem;
+        }
+
+        .sidebar-menu {
+          gap: 6px;
+          margin: 0;
+        }
+
+        .sidebar-menu a {
+          padding: 6px 8px;
+          font-size: 0.75rem;
+          gap: 4px;
+        }
+
+        .sidebar-menu i {
+          font-size: 0.9rem;
+        }
+
+        .sidebar-footer {
+          min-width: 100%;
+          padding-top: 8px;
+        }
+
+        .logout-btn {
+          padding: 6px;
+          font-size: 0.75rem;
+        }
+
+        .stats-grid {
+          grid-template-columns: 1fr;
+          gap: 12px;
+          margin-bottom: 15px;
+        }
+
+        .stat-card {
+          padding: 12px;
+        }
+
+        .stat-icon {
+          font-size: 1.5rem;
+          margin-bottom: 8px;
+        }
+
+        .stat-value {
+          font-size: 1.3rem;
+        }
+
+        .stat-label {
+          font-size: 0.7rem;
+        }
+
+        .appointments-grid {
+          gap: 12px;
+        }
+
+        .appointment-card {
+          padding: 12px;
+        }
+
+        .appointment-header h3 {
+          font-size: 0.95rem;
+        }
+
+        .appointment-details {
+          font-size: 0.8rem;
+          line-height: 1.6;
+        }
+
+        .appointment-actions {
+          gap: 8px;
+        }
+
+        .btn-action {
+          padding: 6px 8px;
+          font-size: 0.75rem;
+        }
+
+        .prescription-form {
+          padding: 15px;
+        }
+
+        .form-header {
+          margin-bottom: 16px;
+          padding-bottom: 12px;
+        }
+
+        .form-header h2 {
+          font-size: 1.2rem;
+        }
+
+        .form-group {
+          margin-bottom: 12px;
+        }
+
+        label {
+          font-size: 0.8rem;
+          margin-bottom: 6px;
+        }
+
+        input,
+        textarea,
+        select {
+          font-size: 14px;
+        }
+
+        .btn-primary,
+        .btn-secondary {
+          padding: 8px 12px;
+          font-size: 0.85rem;
+        }
+      }
     </style>
   </head>
   <body>
