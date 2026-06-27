@@ -586,6 +586,86 @@ textarea:focus-visible {
 .hero-badge i {
   color: var(--accent);
 }
+.hero-rating-inline {
+  display: none;
+  width: min(260px, 58vw);
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.32);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.28);
+  margin-bottom: 18px;
+}
+.hero-rating-inline img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.hero-rating-spotlight {
+  width: min(380px, 34vw);
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 16px;
+  padding: 10px 14px;
+  margin: 0;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.22);
+}
+.hero-rating-right {
+  position: absolute;
+  top: 138px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  width: 100%;
+  max-width: 1200px;
+  padding: 0 24px;
+  display: flex;
+  justify-content: flex-end;
+  pointer-events: none;
+}
+.hero-rating-right .hero-rating-spotlight {
+  pointer-events: auto;
+}
+.hero-rating-image-right {
+  position: absolute;
+  top: 138px;
+  right: 24px;
+  z-index: 3;
+  display: block;
+  visibility: visible;
+  opacity: 1;
+  width: min(420px, 34vw);
+  min-width: 300px;
+  height: auto;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.28);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+}
+.hero-rating-image-right img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.hero-rating-spotlight img {
+  width: 100%;
+  height: auto;
+}
+.hero-rating-spotlight .rating-copy {
+  margin-top: 8px;
+}
+.hero-rating-spotlight .rating-copy strong {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.2;
+  display: block;
+}
+.hero-rating-spotlight .rating-copy span {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.35;
+}
 .hero h1 {
   font-family: var(--font-heading);
   font-size: clamp(2.4rem, 5.5vw, 4.2rem);
@@ -676,6 +756,9 @@ textarea:focus-visible {
   border-radius: var(--radius-lg);
   padding: 36px 28px;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   box-shadow: var(--shadow-sm);
   transition: var(--transition);
   border: 1px solid #e2e8f0;
@@ -699,10 +782,47 @@ textarea:focus-visible {
   margin: 0 auto 22px;
   transition: var(--transition);
 }
+.service-icon img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+.service-icon-image {
+  width: 128px;
+  height: 128px;
+  flex: 0 0 128px;
+  border-radius: 18px;
+  background: transparent;
+  color: inherit;
+  overflow: hidden;
+  margin: 0 auto 22px;
+}
+.service-icon.service-icon-image {
+  background: transparent;
+  color: inherit;
+}
+.service-icon-image img {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  object-position: center;
+}
+.general-dentistry-image {
+  width: 148px;
+  height: 148px;
+  flex: 0 0 148px;
+}
 .service-card:hover .service-icon {
   background: var(--primary);
   color: #fff;
   transform: scale(1.1);
+}
+.service-card:hover .service-icon.service-icon-image {
+  background: transparent;
+  color: inherit;
+  transform: none;
 }
 .service-card h3 {
   font-size: 1.15rem;
@@ -1611,7 +1731,34 @@ textarea:focus-visible {
 /* ════════════════════════════════════════════
    RESPONSIVE
 ════════════════════════════════════════════ */
-@media (max-width: 1024px) {
+@media (max-width: 900px) {
+  .hero-content {
+    display: block;
+    max-width: 700px;
+  }
+  .hero-rating-right {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    max-width: 700px;
+    margin: 16px auto 0;
+    justify-content: flex-start;
+    padding: 0 24px;
+  }
+  .hero-rating-spotlight {
+    width: 100%;
+    max-width: 420px;
+    margin: 0 0 22px;
+  }
+  .hero-rating-image-right {
+    position: absolute;
+    top: 130px;
+    right: 16px;
+    width: min(320px, 36vw);
+    min-width: 220px;
+    margin: 0;
+  }
   .why-us-inner {
     grid-template-columns: 1fr;
     gap: 48px;
@@ -1721,6 +1868,14 @@ textarea:focus-visible {
   }
 
   /* Hero */
+  .hero-rating-image-right {
+    position: relative;
+    top: auto;
+    right: auto;
+    width: min(360px, 100%);
+    min-width: 0;
+    margin: 18px auto 0;
+  }
   .hero-stats {
     gap: 24px;
   }
@@ -1730,6 +1885,16 @@ textarea:focus-visible {
   .hero-actions {
     flex-direction: column;
     width: 100%;
+  }
+  .hero-rating-spotlight {
+    width: 100%;
+    max-width: 420px;
+  }
+  .hero-rating-spotlight img {
+    width: 104px;
+  }
+  .hero-rating-spotlight .rating-copy strong {
+    font-size: 0.95rem;
   }
   .hero-actions .btn-primary,
   .hero-actions .btn-outline {

@@ -89,14 +89,27 @@
               "Friday",
               "Saturday"
             ],
-            "opens": "09:00",
-            "closes": "20:00"
+            "opens": "10:00",
+            "closes": "14:00"
+          },
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": [
+              "Monday",
+              "Tuesday",
+              "Wednesday",
+              "Thursday",
+              "Friday",
+              "Saturday"
+            ],
+            "opens": "17:00",
+            "closes": "21:00"
           },
           {
             "@type": "OpeningHoursSpecification",
             "dayOfWeek": "Sunday",
-            "opens": "10:00",
-            "closes": "14:00"
+            "opens": "09:00",
+            "closes": "09:00"
           }
         ]
       }
@@ -261,6 +274,12 @@
         <span class="hero-badge"
           ><i class="fas fa-star"></i> Bengaluru's Trusted Dental Clinic</span
         >
+        <div
+          class="hero-rating-inline"
+          aria-label="Clinic 5 star patient rating"
+        >
+          <img src="assets/fivestarrating.png" alt="Clinic 5 star rating" />
+        </div>
         <h1>Your Smile Is Our <span class="highlight">Priority</span></h1>
         <p class="hero-sub">
           Advanced dental care, compassionate service and beautiful smiles — all
@@ -294,6 +313,13 @@
         </div>
       </div>
 
+      <div
+        class="hero-rating-image-right"
+        aria-label="Clinic 5 star patient rating"
+      >
+        <img src="assets/fivestarrating.png" alt="Clinic 5 star rating" />
+      </div>
+
       <div class="hero-scroll-hint">
         <a href="#services"><i class="fas fa-chevron-down"></i></a>
       </div>
@@ -312,7 +338,9 @@
         </div>
         <div class="services-grid">
           <div class="service-card" data-aos="fade-up">
-            <div class="service-icon"><i class="fas fa-tooth"></i></div>
+            <div class="service-icon-image general-dentistry-image">
+              <img src="assets/Generaldentistry.png" alt="General Dentistry" />
+            </div>
             <h3>General Dentistry</h3>
             <p>
               Routine check-ups, cleanings, fillings, and preventive care to
@@ -320,7 +348,9 @@
             </p>
           </div>
           <div class="service-card" data-aos="fade-up" data-delay="100">
-            <div class="service-icon"><i class="fas fa-smile"></i></div>
+            <div class="service-icon-image">
+              <img src="assets/smiledesign.png" alt="Smile Designing" />
+            </div>
             <h3>Smile Designing</h3>
             <p>
               Transform your smile with custom cosmetic treatments tailored to
@@ -328,7 +358,9 @@
             </p>
           </div>
           <div class="service-card" data-aos="fade-up" data-delay="200">
-            <div class="service-icon"><i class="fas fa-bone"></i></div>
+            <div class="service-icon-image">
+              <img src="assets/dentalimplant.png" alt="Dental Implants" />
+            </div>
             <h3>Dental Implants</h3>
             <p>
               Permanent, natural-looking tooth replacements using
@@ -336,7 +368,12 @@
             </p>
           </div>
           <div class="service-card" data-aos="fade-up" data-delay="300">
-            <div class="service-icon"><i class="fas fa-teeth"></i></div>
+            <div class="service-icon-image">
+              <img
+                src="assets/orthodonticsbraces.png"
+                alt="Orthodontics & Braces"
+              />
+            </div>
             <h3>Orthodontics & Braces</h3>
             <p>
               Metal braces, ceramic braces and clear aligners for a perfectly
@@ -344,7 +381,9 @@
             </p>
           </div>
           <div class="service-card" data-aos="fade-up" data-delay="400">
-            <div class="service-icon"><i class="fas fa-magic"></i></div>
+            <div class="service-icon-image">
+              <img src="assets/teethwhitening.png" alt="Teeth Whitening" />
+            </div>
             <h3>Teeth Whitening</h3>
             <p>
               Professional in-office and take-home whitening treatments for
@@ -352,7 +391,9 @@
             </p>
           </div>
           <div class="service-card" data-aos="fade-up" data-delay="500">
-            <div class="service-icon"><i class="fas fa-procedures"></i></div>
+            <div class="service-icon-image">
+              <img src="assets/rootcanal.png" alt="Root Canal Treatment" />
+            </div>
             <h3>Root Canal Treatment</h3>
             <p>
               Pain-free root canal therapy using modern rotary technology to
@@ -360,7 +401,9 @@
             </p>
           </div>
           <div class="service-card" data-aos="fade-up" data-delay="100">
-            <div class="service-icon"><i class="fas fa-crown"></i></div>
+            <div class="service-icon-image">
+              <img src="assets/veneercrown.png" alt="Crowns & Veneers" />
+            </div>
             <h3>Crowns & Veneers</h3>
             <p>
               High-quality ceramic crowns and ultra-thin porcelain veneers for a
@@ -368,7 +411,9 @@
             </p>
           </div>
           <div class="service-card" data-aos="fade-up" data-delay="200">
-            <div class="service-icon"><i class="fas fa-child"></i></div>
+            <div class="service-icon-image">
+              <img src="assets/padiatric.png" alt="Paediatric Dentistry" />
+            </div>
             <h3>Paediatric Dentistry</h3>
             <p>
               Gentle, fun and child-friendly dental care to build healthy habits
@@ -376,7 +421,12 @@
             </p>
           </div>
           <div class="service-card" data-aos="fade-up" data-delay="300">
-            <div class="service-icon"><i class="fas fa-teeth-open"></i></div>
+            <div class="service-icon-image">
+              <img
+                src="assets/mouthrehabit.png"
+                alt="Full Mouth Rehabilitation"
+              />
+            </div>
             <h3>Full Mouth Rehabilitation</h3>
             <p>
               Complete oral restoration combining multiple restorative
@@ -801,22 +851,9 @@
             </button>
             <div class="faq-answer">
               <p>
-                We are open Monday to Saturday, 9:00 AM – 8:00 PM, and Sunday
-                10:00 AM – 2:00 PM. Emergency dental care is available — call us
-                for assistance.
-              </p>
-            </div>
-          </div>
-          <div class="faq-item">
-            <button class="faq-question">
-              Do you accept dental insurance?
-              <i class="fas fa-chevron-down"></i>
-            </button>
-            <div class="faq-answer">
-              <p>
-                Yes, we accept most major dental insurance plans. Please bring
-                your insurance card and ID on your first visit. Our team will
-                help verify your coverage.
+                We are open Monday to Saturday, 10:00 AM – 2:00 PM and 5:00 PM –
+                9:00 PM. Sunday is available on prior appointment only.
+                Emergency dental care is available — call us for assistance.
               </p>
             </div>
           </div>
@@ -883,7 +920,8 @@
               <div>
                 <h4>Working Hours</h4>
                 <p>
-                  Mon – Sat: 9:00 AM – 8:00 PM<br />Sunday: 10:00 AM – 2:00 PM
+                  Mon – Sat: 10:00 AM – 2:00 PM<br />Mon – Sat: 5:00 PM – 9:00
+                  PM<br />Sunday: On Prior Appointment
                 </p>
               </div>
             </div>
@@ -998,7 +1036,9 @@
             <i class="fas fa-phone-alt"></i>
             <a href="tel:+919663252315">+91-9663252315</a>
           </p>
-          <p><i class="fas fa-clock"></i> Mon–Sat: 9 AM – 8 PM</p>
+          <p><i class="fas fa-clock"></i> Mon–Sat: 10 AM – 2 PM</p>
+          <p><i class="fas fa-clock"></i> Mon–Sat: 5 PM – 9 PM</p>
+          <p><i class="fas fa-clock"></i> Sunday: On Prior Appointment</p>
         </div>
       </div>
       <div class="footer-bottom">
