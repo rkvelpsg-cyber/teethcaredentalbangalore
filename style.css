@@ -479,9 +479,17 @@ textarea:focus-visible {
   gap: 6px;
   align-items: center;
 }
+#mainNav li {
+  display: flex;
+  align-items: center;
+}
 #mainNav a {
+  display: inline-flex;
+  align-items: center;
   font-size: 0.9rem;
   font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
   color: rgba(255, 255, 255, 0.9);
   padding: 8px 14px;
   border-radius: 8px;
@@ -799,6 +807,15 @@ textarea:focus-visible {
   font-weight: 700;
   color: var(--accent);
   display: inline;
+}
+.stat-num-suffix {
+  font-family: var(--font-heading);
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+.stat-plus {
+  color: #fff;
 }
 .stat-label {
   font-size: 0.78rem;
@@ -1714,6 +1731,9 @@ textarea:focus-visible {
   font-size: clamp(1.6rem, 3vw, 2.4rem);
   color: #fff;
   margin-bottom: 8px;
+}
+.cta-inner h2 .highlight {
+  color: #fff;
 }
 .cta-inner p {
   color: rgba(255, 255, 255, 0.8);
