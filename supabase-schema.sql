@@ -6,6 +6,17 @@
 -- Enable pgcrypto for SHA-256 password hashing
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
 
+-- ═══════════════════════════════════════════════════════
+--  MIGRATION — Add new columns to existing tables
+--  Safe to re-run (uses IF NOT EXISTS)
+-- ═══════════════════════════════════════════════════════
+ALTER TABLE online_enquiries ADD COLUMN IF NOT EXISTS assigned_to        TEXT;
+ALTER TABLE online_enquiries ADD COLUMN IF NOT EXISTS assigned_at        TIMESTAMPTZ;
+ALTER TABLE online_enquiries ADD COLUMN IF NOT EXISTS appointment_status TEXT DEFAULT 'pending';
+ALTER TABLE online_enquiries ADD COLUMN IF NOT EXISTS appointment_date   DATE;
+ALTER TABLE online_enquiries ADD COLUMN IF NOT EXISTS appointment_time   TEXT;
+ALTER TABLE online_enquiries ADD COLUMN IF NOT EXISTS admin_notes        TEXT;
+
 -- 0. DOCTORS (Login credentials)
 -- ─────────────────────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS doctors (

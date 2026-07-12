@@ -436,10 +436,16 @@ textarea:focus-visible {
   box-shadow: var(--shadow-sm);
   padding: 12px 0;
 }
+#mainHeader .container {
+  max-width: 1440px;
+  padding: 0 20px;
+}
+
 .header-inner {
   display: flex;
   align-items: center;
-  gap: 24px;
+  gap: 10px;
+  flex-wrap: nowrap;
 }
 .logo-link {
   display: flex;
@@ -508,14 +514,14 @@ textarea:focus-visible {
 }
 
 .btn-appt {
-  padding: 10px 22px !important;
-  font-size: 0.88rem !important;
+  padding: 8px 16px !important;
+  font-size: 0.82rem !important;
   flex-shrink: 0;
 }
 
 .btn-doctor {
-  padding: 10px 18px;
-  font-size: 0.88rem;
+  padding: 8px 14px;
+  font-size: 0.82rem;
   background: linear-gradient(135deg, #059669 0%, #047857 100%);
   color: #fff;
   border: none;
@@ -540,15 +546,43 @@ textarea:focus-visible {
   background: linear-gradient(135deg, #059669 0%, #047857 100%);
 }
 
-.nav-doctor-login {
+.btn-admin {
+  padding: 8px 14px;
+  font-size: 0.82rem;
+  background: linear-gradient(135deg, #1e40af 0%, #0ea5e9 100%);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: var(--transition);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  font-weight: 600;
+}
+
+.btn-admin:hover {
+  background: linear-gradient(135deg, #1e3a8a 0%, #0284c7 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(30, 64, 175, 0.3);
+}
+
+#mainNav .nav-doctor-login,
+#mainNav .nav-admin-login,
+#mainNav .nav-book-appt {
   display: none;
+}
 }
 
 .header-social {
   display: flex;
+  flex-direction: row;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   flex-shrink: 0;
+  order: 3;
 }
 
 .header-social a {
@@ -1970,6 +2004,13 @@ textarea:focus-visible {
   }
 }
 
+/* Hide social icons below 1400px to prevent header overflow */
+@media (max-width: 1400px) {
+  .header-social {
+    display: none !important;
+  }
+}
+
 /* Tablet header behavior to avoid nav/button overlap */
 @media (max-width: 1100px) {
   #mainNav {
@@ -1999,10 +2040,10 @@ textarea:focus-visible {
   #mainNav a:hover {
     background: rgba(255, 255, 255, 0.1) !important;
   }
-  .nav-doctor-login {
+  #mainNav .nav-doctor-login {
     display: list-item;
   }
-  .nav-doctor-login a {
+  #mainNav .nav-doctor-login a {
     background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
     color: #fff !important;
     font-weight: 600;
@@ -2011,8 +2052,39 @@ textarea:focus-visible {
     align-items: center;
     gap: 6px;
   }
-  .nav-doctor-login a:hover {
+  #mainNav .nav-doctor-login a:hover {
     background: linear-gradient(135deg, #047857 0%, #065f46 100%) !important;
+  }
+  #mainNav .nav-admin-login {
+    display: list-item;
+  }
+  #mainNav .nav-admin-login a {
+    background: linear-gradient(135deg, #1e40af 0%, #0ea5e9 100%) !important;
+    color: #fff !important;
+    font-weight: 600;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  #mainNav .nav-admin-login a:hover {
+    background: linear-gradient(135deg, #1e3a8a 0%, #0284c7 100%) !important;
+  }
+  #mainNav .nav-book-appt {
+    display: list-item;
+  }
+  #mainNav .nav-book-appt a {
+    background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%) !important;
+    color: #fff !important;
+    font-weight: 700;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    justify-content: center;
+  }
+  #mainNav .nav-book-appt a:hover {
+    background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%) !important;
   }
   .hamburger {
     display: flex;
@@ -2021,6 +2093,9 @@ textarea:focus-visible {
     display: none;
   }
   .btn-doctor {
+    display: none;
+  }
+  .btn-admin {
     display: none;
   }
   .header-social {
