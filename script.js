@@ -35,11 +35,6 @@
     document.body.style.overflow = "";
   }
 
-  // Open on page load after short delay
-  window.addEventListener("load", () => {
-    setTimeout(openModal, 800);
-  });
-
   openBtns.forEach((btn) => btn.addEventListener("click", openModal));
   modalClose.addEventListener("click", closeModal);
 
@@ -440,51 +435,50 @@
     let currentIdx = 0;
     let autoPlayTimer;
 
-    // How many cards visible at once based on viewport
-    function visibleCount() {
-      if (window.innerWidth <= 768) return 1;
-      if (window.innerWidth <= 1024) return 2;
-      return 3;
-    }
+    const total = cards.length;
 
-    const totalSlides = Math.ceil(cards.length / visibleCount());
+    function setCardWidths() {
+      const wrapWidth = track.parentElement.offsetWidth;
+      cards.forEach((card) => {
+        card.style.width = wrapWidth + "px";
+      });
+    }
 
     // Build dots
     function buildDots() {
       dotsWrap.innerHTML = "";
-      const count = Math.ceil(cards.length / visibleCount());
-      for (let i = 0; i < count; i++) {
+      for (let i = 0; i < total; i++) {
         const dot = document.createElement("button");
         dot.className = "dot" + (i === currentIdx ? " active" : "");
-        dot.setAttribute("aria-label", `Go to slide ${i + 1}`);
+        dot.setAttribute("aria-label", `Go to review ${i + 1}`);
         dot.addEventListener("click", () => goTo(i));
         dotsWrap.appendChild(dot);
       }
     }
 
     function goTo(idx) {
-      const count = Math.ceil(cards.length / visibleCount());
-      currentIdx = (idx + count) % count;
-      const cardWidth = cards[0].getBoundingClientRect().width + 24; // gap
-      track.style.transform = `translateX(-${currentIdx * cardWidth * visibleCount()}px)`;
+      currentIdx = (idx + total) % total;
+      const wrapWidth = track.parentElement.offsetWidth;
+      track.style.transform = `translateX(-${currentIdx * wrapWidth}px)`;
       $$(".dot", dotsWrap).forEach((d, i) =>
         d.classList.toggle("active", i === currentIdx),
       );
     }
 
     function next() {
-      const count = Math.ceil(cards.length / visibleCount());
-      goTo((currentIdx + 1) % count);
+      goTo(currentIdx + 1);
     }
 
     function startAutoPlay() {
-      autoPlayTimer = setInterval(next, 4000);
+      stopAutoPlay();
+      autoPlayTimer = setInterval(next, 5000);
     }
 
     function stopAutoPlay() {
       clearInterval(autoPlayTimer);
     }
 
+    setCardWidths();
     buildDots();
     startAutoPlay();
 
@@ -507,18 +501,13 @@
     track.addEventListener("touchend", (e) => {
       const diff = touchStartX - e.changedTouches[0].clientX;
       if (Math.abs(diff) > 50) {
-        const count = Math.ceil(cards.length / visibleCount());
-        goTo(
-          diff > 0
-            ? (currentIdx + 1) % count
-            : (currentIdx - 1 + count) % count,
-        );
+        goTo(diff > 0 ? currentIdx + 1 : currentIdx - 1);
       }
     });
 
     window.addEventListener("resize", () => {
-      buildDots();
-      goTo(0);
+      setCardWidths();
+      goTo(currentIdx);
     });
   }
 
