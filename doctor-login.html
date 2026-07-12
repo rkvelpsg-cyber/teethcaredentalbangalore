@@ -181,7 +181,7 @@
             type="text"
             id="doctorId"
             name="doctorId"
-            placeholder="Enter your Doctor ID"
+            placeholder="Enter your Doctor ID (e.g. drhumayun)"
             required
           />
         </div>
@@ -202,11 +202,6 @@
         </button>
       </form>
 
-      <div class="demo-credentials">
-        <strong>Demo Credentials:</strong>
-        ID: <code>DR001</code> | Password: <code>demo123</code>
-      </div>
-
       <div class="back-link">
         <a
           href="index.html"
@@ -219,23 +214,72 @@
       </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script src="supabase-config.js"></script>
     <script>
-      function handleDoctorLogin(event) {
+      async function sha256(text) {
+        const encoder = new TextEncoder();
+        const data = encoder.encode(text);
+        const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+        return Array.from(new Uint8Array(hashBuffer))
+          .map((b) => b.toString(16).padStart(2, "0"))
+          .join("");
+      }
+
+      async function handleDoctorLogin(event) {
         event.preventDefault();
-        const doctorId = document.getElementById("doctorId").value;
+        const btn = document.querySelector(".submit-btn");
+        const doctorCode = document
+          .getElementById("doctorId")
+          .value.trim()
+          .toLowerCase();
         const password = document.getElementById("password").value;
 
-        // Demo authentication
-        if (doctorId === "DR001" && password === "demo123") {
-          // Store session and redirect to dashboard
-          localStorage.setItem("doctorId", doctorId);
-          localStorage.setItem("doctorName", "Dr. Humayun Aleem");
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Verifying…';
+
+        try {
+          const passwordHash = await sha256(password);
+
+          const { data, error } = await window._sb
+            .from("doctors")
+            .select("doctor_code, name, avatar, is_active")
+            .eq("doctor_code", doctorCode)
+            .eq("password_hash", passwordHash)
+            .eq("is_active", true)
+            .single();
+
+          if (error || !data) {
+            btn.disabled = false;
+            btn.innerHTML =
+              '<i class="fas fa-sign-in-alt"></i> Login to Dashboard';
+            showError("Invalid Doctor ID or password. Please try again.");
+            return;
+          }
+
+          localStorage.setItem("doctorId", data.doctor_code);
+          localStorage.setItem("doctorName", data.name);
+          localStorage.setItem("doctorAvatar", data.avatar || "DR");
           window.location.href = "doctor-dashboard.html";
-        } else {
-          alert(
-            "Invalid credentials. Please try again.\n\nDemo: ID: DR001, Password: demo123",
-          );
+        } catch (err) {
+          console.error("Login error:", err);
+          btn.disabled = false;
+          btn.innerHTML =
+            '<i class="fas fa-sign-in-alt"></i> Login to Dashboard';
+          showError("Something went wrong. Please try again.");
         }
+      }
+
+      function showError(msg) {
+        let errDiv = document.getElementById("loginError");
+        if (!errDiv) {
+          errDiv = document.createElement("div");
+          errDiv.id = "loginError";
+          errDiv.style.cssText =
+            "margin-top:14px;padding:10px 14px;background:#fee2e2;color:#dc2626;border-radius:8px;font-size:0.9rem;text-align:center;";
+          document.getElementById("doctorLoginForm").after(errDiv);
+        }
+        errDiv.textContent = msg;
       }
     </script>
   </body>

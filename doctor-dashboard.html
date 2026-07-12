@@ -397,6 +397,114 @@
         color: #64748b;
       }
 
+      /* Online Enquiry Styles */
+      .enquiry-badge {
+        background: #ef4444;
+        color: #fff;
+        font-size: 0.7rem;
+        font-weight: 700;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: auto;
+      }
+      .enquiry-badge.hidden {
+        display: none;
+      }
+      .enquiry-table-wrap {
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        overflow-x: auto;
+      }
+      .enquiry-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.9rem;
+      }
+      .enquiry-table th {
+        background: #f0fdf4;
+        padding: 14px 16px;
+        text-align: left;
+        font-weight: 700;
+        color: #0f766e;
+        border-bottom: 2px solid #d1fae5;
+        white-space: nowrap;
+      }
+      .enquiry-table td {
+        padding: 13px 16px;
+        border-bottom: 1px solid #f1f5f9;
+        vertical-align: top;
+        color: #374151;
+      }
+      .enquiry-table tr.new-row td {
+        background: #f0fdf4;
+      }
+      .enquiry-table tr:last-child td {
+        border-bottom: none;
+      }
+      .enquiry-table tr:hover td {
+        background: #f8fafc;
+      }
+      .tag-new {
+        display: inline-block;
+        padding: 3px 10px;
+        background: #dcfce7;
+        color: #15803d;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 700;
+      }
+      .tag-read {
+        display: inline-block;
+        padding: 3px 10px;
+        background: #f1f5f9;
+        color: #64748b;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 600;
+      }
+      .enquiry-actions {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+      }
+      .btn-mark-read {
+        padding: 5px 12px;
+        background: #0ea5e9;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 0.8rem;
+        font-weight: 600;
+      }
+      .btn-mark-read:hover {
+        background: #0284c7;
+      }
+      .btn-del-enquiry {
+        padding: 5px 10px;
+        background: #fee2e2;
+        color: #dc2626;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 0.8rem;
+        font-weight: 600;
+      }
+      .btn-del-enquiry:hover {
+        background: #fecaca;
+      }
+      .enquiry-empty {
+        text-align: center;
+        padding: 40px;
+        color: #94a3b8;
+        font-size: 0.95rem;
+      }
+
       @media (max-width: 1024px) {
         .dashboard-container {
           grid-template-columns: 1fr;
@@ -699,13 +807,9 @@
             </a>
           </li>
           <li>
-            <a onclick="switchSection('prescription')" class="menu-item">
-              <i class="fas fa-prescription-bottle"></i> Write Prescription
-            </a>
-          </li>
-          <li>
-            <a onclick="switchSection('history')" class="menu-item">
-              <i class="fas fa-history"></i> Prescription History
+            <a onclick="switchSection('enquiries')" class="menu-item" id="enquiryMenuItem">
+              <i class="fas fa-envelope-open-text"></i> Online Enquiry
+              <span class="enquiry-badge hidden" id="enquiryBadge">0</span>
             </a>
           </li>
         </ul>
@@ -732,172 +836,247 @@
         <div id="dashboard" class="content-section active">
           <div class="stats-grid">
             <div class="stat-card">
-              <div class="stat-icon" style="color: #059669">
-                <i class="fas fa-calendar-check"></i>
-              </div>
-              <div class="stat-value">12</div>
-              <div class="stat-label">Today's Appointments</div>
+              <div class="stat-icon" style="color: #059669"><i class="fas fa-calendar-check"></i></div>
+              <div class="stat-value" id="statConfirmed">—</div>
+              <div class="stat-label">Confirmed Appointments</div>
             </div>
-
             <div class="stat-card">
-              <div class="stat-icon" style="color: #0ea5e9">
-                <i class="fas fa-user-injured"></i>
-              </div>
-              <div class="stat-value">248</div>
-              <div class="stat-label">Total Patients</div>
+              <div class="stat-icon" style="color: #0ea5e9"><i class="fas fa-envelope-open-text"></i></div>
+              <div class="stat-value" id="statEnquiries">—</div>
+              <div class="stat-label">Total Enquiries</div>
             </div>
-
             <div class="stat-card">
-              <div class="stat-icon" style="color: #8b5cf6">
-                <i class="fas fa-prescription-bottle"></i>
-              </div>
-              <div class="stat-value">42</div>
-              <div class="stat-label">Prescriptions Today</div>
+              <div class="stat-icon" style="color: #f59e0b"><i class="fas fa-clock"></i></div>
+              <div class="stat-value" id="statPending">—</div>
+              <div class="stat-label">Pending Enquiries</div>
             </div>
-
             <div class="stat-card">
-              <div class="stat-icon" style="color: #f59e0b">
-                <i class="fas fa-clock"></i>
-              </div>
-              <div class="stat-value">3</div>
-              <div class="stat-label">Pending Tasks</div>
+              <div class="stat-icon" style="color: #ef4444"><i class="fas fa-bell"></i></div>
+              <div class="stat-value" id="statNew">—</div>
+              <div class="stat-label">New (Unread)</div>
             </div>
           </div>
         </div>
 
         <!-- Appointments Section -->
         <div id="appointments" class="content-section">
-          <h2 style="margin-bottom: 20px; font-size: 1.5rem">
-            Today's Appointments
-          </h2>
-          <div class="appointments-grid" id="appointmentsGrid">
-            <!-- Appointments will be loaded here -->
-          </div>
-        </div>
-
-        <!-- Prescription Section -->
-        <div id="prescription" class="content-section">
-          <div class="prescription-form">
-            <div class="form-header">
-              <h2>Write Prescription</h2>
-              <button onclick="clearForm()">
-                <i class="fas fa-redo"></i> Clear
-              </button>
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:20px;">
+            <h2 style="font-size:1.5rem;">Appointments</h2>
+            <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+              <input type="date" id="apptFrom" style="padding:7px 10px;border:1px solid #e2e8f0;border-radius:6px;font-size:0.85rem;" />
+              <span style="color:#64748b;">to</span>
+              <input type="date" id="apptTo" style="padding:7px 10px;border:1px solid #e2e8f0;border-radius:6px;font-size:0.85rem;" />
+              <button onclick="loadAppointments()" style="padding:7px 14px;background:#059669;color:#fff;border:none;border-radius:6px;cursor:pointer;font-weight:600;font-size:0.85rem;"><i class="fas fa-filter"></i> Filter</button>
+              <button onclick="exportTableToExcel('appointmentsTable','appointments')" style="padding:7px 14px;background:#0ea5e9;color:#fff;border:none;border-radius:6px;cursor:pointer;font-weight:600;font-size:0.85rem;"><i class="fas fa-file-excel"></i> Export</button>
             </div>
-
-            <form
-              id="prescriptionForm"
-              onsubmit="handlePrescriptionSubmit(event)"
-            >
-              <div class="form-grid">
-                <div class="form-group">
-                  <label for="patientName">Patient Name</label>
-                  <input
-                    type="text"
-                    id="patientName"
-                    placeholder="Enter patient name"
-                    required
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="patientPhone">Phone Number (WhatsApp)</label>
-                  <input
-                    type="tel"
-                    id="patientPhone"
-                    placeholder="Enter 10-digit number"
-                    required
-                  />
-                </div>
-              </div>
-
-              <div class="form-grid">
-                <div class="form-group">
-                  <label for="diagnosis">Diagnosis</label>
-                  <input
-                    type="text"
-                    id="diagnosis"
-                    placeholder="Enter diagnosis"
-                    required
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="appointmentDate">Appointment Date</label>
-                  <input type="date" id="appointmentDate" required />
-                </div>
-              </div>
-
-              <div class="form-grid full">
-                <div class="form-group">
-                  <label for="medicines">Medicines</label>
-                  <textarea
-                    id="medicines"
-                    placeholder="List medicines with dosage and duration&#10;E.g.:&#10;1. Amoxicillin 500mg - 2 times daily for 5 days&#10;2. Ibuprofen 400mg - After meals for pain relief"
-                    required
-                  ></textarea>
-                </div>
-              </div>
-
-              <div class="form-grid full">
-                <div class="form-group">
-                  <label for="instructions">Special Instructions</label>
-                  <textarea
-                    id="instructions"
-                    placeholder="Enter any special instructions or dietary recommendations"
-                  ></textarea>
-                </div>
-              </div>
-
-              <div class="form-grid full">
-                <div class="form-group">
-                  <label for="followUp">Follow-up Instructions</label>
-                  <textarea
-                    id="followUp"
-                    placeholder="When should the patient return? Any specific conditions to watch for?"
-                  ></textarea>
-                </div>
-              </div>
-
-              <div class="form-actions">
-                <button type="submit" class="btn-primary">
-                  <i class="fas fa-save"></i> Save & Generate PDF
-                </button>
-                <button
-                  type="button"
-                  class="btn-secondary"
-                  onclick="handleWhatsAppShare()"
-                >
-                  <i class="fab fa-whatsapp"></i> Send via WhatsApp
-                </button>
-              </div>
-            </form>
+          </div>
+          <div class="enquiry-table-wrap">
+            <div id="appointmentsTableContainer"></div>
           </div>
         </div>
 
-        <!-- History Section -->
-        <div id="history" class="content-section">
-          <h2 style="margin-bottom: 20px; font-size: 1.5rem">
-            Prescription History
-          </h2>
-          <div
-            id="prescriptionHistory"
-            style="background: #fff; border-radius: 12px; padding: 20px"
-          ></div>
+        <!-- Online Enquiries Section -->
+        <div id="enquiries" class="content-section">
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:20px;">
+            <h2 style="font-size:1.5rem;">Online Enquiries</h2>
+            <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+              <input type="date" id="enqFrom" style="padding:7px 10px;border:1px solid #e2e8f0;border-radius:6px;font-size:0.85rem;" />
+              <span style="color:#64748b;">to</span>
+              <input type="date" id="enqTo" style="padding:7px 10px;border:1px solid #e2e8f0;border-radius:6px;font-size:0.85rem;" />
+              <button onclick="loadOnlineEnquiries()" style="padding:7px 14px;background:#059669;color:#fff;border:none;border-radius:6px;cursor:pointer;font-weight:600;font-size:0.85rem;"><i class="fas fa-filter"></i> Filter</button>
+              <button onclick="exportTableToExcel('enquiriesTable','online-enquiries')" style="padding:7px 14px;background:#0ea5e9;color:#fff;border:none;border-radius:6px;cursor:pointer;font-weight:600;font-size:0.85rem;"><i class="fas fa-file-excel"></i> Export</button>
+            </div>
+          </div>
+          <div class="enquiry-table-wrap">
+            <div id="enquiryTableContainer"></div>
+          </div>
         </div>
       </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+    <script src="supabase-config.js"></script>
 
     <script>
-      // Check if logged in
+      const sb = window._sb;
+
       window.addEventListener("load", function () {
         const doctorId = localStorage.getItem("doctorId");
-        if (!doctorId) {
-          window.location.href = "doctor-login.html";
-        }
+        if (!doctorId) { window.location.href = "doctor-login.html"; return; }
+        document.getElementById("doctorName").textContent = localStorage.getItem("doctorName") || "Dr. Humayun Aleem";
+        const av = localStorage.getItem("doctorAvatar") || "DR";
+        document.querySelector(".doctor-avatar").textContent = av;
+        loadDashboardStats();
         loadAppointments();
-        loadPrescriptionHistory();
+        updateEnquiryBadge();
       });
+
+      function switchSection(sectionId) {
+        document.querySelectorAll(".content-section").forEach(s => s.classList.remove("active"));
+        document.querySelectorAll(".menu-item").forEach(i => i.classList.remove("active"));
+        document.getElementById(sectionId).classList.add("active");
+        event.target.closest(".menu-item").classList.add("active");
+        if (sectionId === "enquiries") loadOnlineEnquiries();
+        if (sectionId === "appointments") loadAppointments();
+      }
+
+      /* ── Stats ─────────────────────────────────── */
+      async function loadDashboardStats() {
+        const { data } = await sb.from("online_enquiries").select("status, appointment_status");
+        if (!data) return;
+        document.getElementById("statEnquiries").textContent = data.length;
+        document.getElementById("statNew").textContent = data.filter(e => e.status === "new").length;
+        document.getElementById("statPending").textContent = data.filter(e => e.appointment_status === "pending").length;
+        document.getElementById("statConfirmed").textContent = data.filter(e => e.appointment_status === "confirmed").length;
+      }
+
+      /* ── Appointments ───────────────────────────── */
+      async function loadAppointments() {
+        const container = document.getElementById("appointmentsTableContainer");
+        if (!container) return;
+        container.innerHTML = '<div class="enquiry-empty"><i class="fas fa-spinner fa-spin"></i> Loading...</div>';
+        let query = sb.from("online_enquiries").select("*").eq("appointment_status", "confirmed").order("created_at", { ascending: false });
+        const from = document.getElementById("apptFrom")?.value;
+        const to = document.getElementById("apptTo")?.value;
+        if (from) query = query.gte("created_at", from);
+        if (to)   query = query.lte("created_at", to + "T23:59:59");
+        const { data, error } = await query;
+        if (error || !data || data.length === 0) {
+          container.innerHTML = '<div class="enquiry-empty"><i class="fas fa-calendar-times" style="font-size:2rem;display:block;margin-bottom:10px;"></i>No confirmed appointments yet.</div>';
+          return;
+        }
+        container.innerHTML = `
+          <table class="enquiry-table" id="appointmentsTable">
+            <thead><tr>
+              <th>#</th><th>Name</th><th>Phone</th><th>Email</th>
+              <th>Message</th><th>Appt Date</th><th>Appt Time</th>
+              <th>Admin Notes</th><th>Received</th>
+            </tr></thead>
+            <tbody>
+              ${data.map((e, i) => `<tr>
+                <td>${i+1}</td>
+                <td><strong>${e.name||'—'}</strong></td>
+                <td><a href="tel:${e.phone}" style="color:#0ea5e9;text-decoration:none;">${e.phone||'—'}</a></td>
+                <td>${e.email||'—'}</td>
+                <td style="max-width:180px;font-size:0.85rem;">${e.message||'—'}</td>
+                <td>${e.appointment_date||'—'}</td>
+                <td>${e.appointment_time||'—'}</td>
+                <td style="font-size:0.85rem;">${e.admin_notes||'—'}</td>
+                <td style="font-size:0.8rem;white-space:nowrap;">${new Date(e.created_at).toLocaleDateString('en-IN')}</td>
+              </tr>`).join('')}
+            </tbody>
+          </table>`;
+      }
+
+      /* ── Online Enquiries ───────────────────────── */
+      async function updateEnquiryBadge() {
+        const { data } = await sb.from("online_enquiries").select("id").eq("status", "new");
+        const n = data ? data.length : 0;
+        const badge = document.getElementById("enquiryBadge");
+        badge.textContent = n;
+        n > 0 ? badge.classList.remove("hidden") : badge.classList.add("hidden");
+      }
+
+      async function loadOnlineEnquiries() {
+        const container = document.getElementById("enquiryTableContainer");
+        container.innerHTML = '<div class="enquiry-empty"><i class="fas fa-spinner fa-spin"></i> Loading enquiries...</div>';
+        let query = sb.from("online_enquiries").select("*").order("created_at", { ascending: false });
+        const from = document.getElementById("enqFrom")?.value;
+        const to   = document.getElementById("enqTo")?.value;
+        if (from) query = query.gte("created_at", from);
+        if (to)   query = query.lte("created_at", to + "T23:59:59");
+        const { data: enquiries, error } = await query;
+        if (error || !enquiries || enquiries.length === 0) {
+          container.innerHTML = '<div class="enquiry-empty"><i class="fas fa-inbox" style="font-size:2rem;display:block;margin-bottom:10px;"></i>No enquiries yet.</div>';
+          return;
+        }
+        const statusTag = s => ({
+          new: '<span class="tag-new">New</span>',
+          read: '<span class="tag-read">Read</span>',
+          responded: '<span style="display:inline-block;padding:3px 10px;background:#e0e7ff;color:#4f46e5;border-radius:20px;font-size:.75rem;font-weight:700;">Responded</span>'
+        }[s] || s);
+        const apptTag = s => ({
+          pending: '<span style="display:inline-block;padding:3px 10px;background:#fef3c7;color:#d97706;border-radius:20px;font-size:.75rem;font-weight:700;">Pending</span>',
+          confirmed: '<span style="display:inline-block;padding:3px 10px;background:#dcfce7;color:#15803d;border-radius:20px;font-size:.75rem;font-weight:700;">Confirmed</span>',
+          not_confirmed: '<span style="display:inline-block;padding:3px 10px;background:#fee2e2;color:#dc2626;border-radius:20px;font-size:.75rem;font-weight:700;">Not Confirmed</span>'
+        }[s] || s);
+        container.innerHTML = `
+          <table class="enquiry-table" id="enquiriesTable">
+            <thead><tr>
+              <th>#</th><th>Name</th><th>Phone</th><th>Email</th><th>Message</th>
+              <th>Received</th><th>Status</th><th>Appt Status</th><th>Assigned To</th><th>Actions</th>
+            </tr></thead>
+            <tbody>
+              ${enquiries.map((e, i) => {
+                const dt = new Date(e.created_at);
+                const isNew = e.status === 'new';
+                const notAssigned = !e.assigned_to;
+                return `<tr class="${isNew ? 'new-row' : ''}">
+                  <td style="color:#94a3b8;font-size:.8rem;">${i+1}</td>
+                  <td><strong>${e.name||'—'}</strong></td>
+                  <td><a href="tel:${e.phone}" style="color:#0ea5e9;text-decoration:none;">${e.phone||'—'}</a></td>
+                  <td style="font-size:.85rem;">${e.email||'—'}</td>
+                  <td style="max-width:180px;font-size:.85rem;color:#64748b;">${e.message||'—'}</td>
+                  <td style="font-size:.8rem;white-space:nowrap;color:#64748b;">${dt.toLocaleDateString('en-IN')}<br>${dt.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'})}</td>
+                  <td>${statusTag(e.status)}</td>
+                  <td>${apptTag(e.appointment_status)}</td>
+                  <td style="font-size:.85rem;">${e.assigned_to ? '<span style="color:#059669;font-weight:600;"><i class="fas fa-user-check"></i> '+e.assigned_to+'</span>' : '<span style="color:#94a3b8;">Unassigned</span>'}</td>
+                  <td>
+                    <div class="enquiry-actions">
+                      ${isNew ? `<button class="btn-mark-read" onclick="markEnquiryRead(${e.id})"><i class="fas fa-check"></i> Read</button>` : ''}
+                      ${notAssigned ? `<button onclick="assignToAdmin(${e.id})" style="padding:5px 12px;background:#8b5cf6;color:#fff;border:none;border-radius:5px;cursor:pointer;font-size:.8rem;font-weight:600;"><i class="fas fa-user-plus"></i> Assign Admin</button>` : ''}
+                      <button class="btn-del-enquiry" onclick="deleteEnquiry(${e.id})"><i class="fas fa-trash"></i></button>
+                    </div>
+                  </td>
+                </tr>`;
+              }).join('')}
+            </tbody>
+          </table>`;
+      }
+
+      async function markEnquiryRead(id) {
+        await sb.from("online_enquiries").update({ status: "read" }).eq("id", id);
+        loadOnlineEnquiries(); updateEnquiryBadge();
+      }
+
+      async function assignToAdmin(id) {
+        const { error } = await sb.from("online_enquiries").update({
+          assigned_to: "admin01",
+          assigned_at: new Date().toISOString(),
+          status: "responded"
+        }).eq("id", id);
+        if (!error) { alert("Assigned to Admin Staff successfully!"); loadOnlineEnquiries(); updateEnquiryBadge(); }
+        else alert("Error assigning: " + error.message);
+      }
+
+      async function deleteEnquiry(id) {
+        if (!confirm("Delete this enquiry?")) return;
+        await sb.from("online_enquiries").delete().eq("id", id);
+        loadOnlineEnquiries(); updateEnquiryBadge();
+      }
+
+      /* ── Excel Export ───────────────────────────── */
+      function exportTableToExcel(tableId, filename) {
+        const table = document.getElementById(tableId);
+        if (!table) { alert("No data to export."); return; }
+        const wb = XLSX.utils.book_new();
+        const ws = XLSX.utils.table_to_sheet(table);
+        XLSX.utils.book_append_sheet(wb, ws, "Data");
+        XLSX.writeFile(wb, filename + "_" + new Date().toISOString().slice(0,10) + ".xlsx");
+      }
+
+      function handleLogout() {
+        if (confirm("Are you sure you want to logout?")) {
+          localStorage.removeItem("doctorId");
+          localStorage.removeItem("doctorName");
+          localStorage.removeItem("doctorAvatar");
+          window.location.href = "index.html";
+        }
+      }
+    </script>
+  </body>
+</html>
 
       function switchSection(sectionId) {
         // Hide all sections
@@ -915,6 +1094,9 @@
 
         // Add active to clicked menu item
         event.target.closest(".menu-item").classList.add("active");
+
+        // Load enquiries when section is opened
+        if (sectionId === "enquiries") loadOnlineEnquiries();
       }
 
       function loadAppointments() {
@@ -1116,24 +1298,32 @@
         window.open(whatsappURL, "_blank");
       }
 
-      function savePrescriptionHistory(prescription) {
-        let history = JSON.parse(
-          localStorage.getItem("prescriptionHistory") || "[]",
-        );
-        history.unshift(prescription);
-        localStorage.setItem(
-          "prescriptionHistory",
-          JSON.stringify(history.slice(0, 50)),
-        );
+      async function savePrescriptionHistory(prescription) {
+        const { error } = await window._sb.from("prescriptions").insert({
+          patient_name: prescription.patientName,
+          patient_phone: prescription.patientPhone,
+          diagnosis: prescription.diagnosis,
+          medicines: prescription.medicines,
+          instructions: prescription.instructions,
+          follow_up: prescription.followUp,
+          prescription_date: new Date().toISOString().split("T")[0],
+          doctor_name: prescription.doctorName,
+        });
+        if (error) console.warn("Supabase prescription save failed:", error);
       }
 
-      function loadPrescriptionHistory() {
-        const history = JSON.parse(
-          localStorage.getItem("prescriptionHistory") || "[]",
-        );
+      async function loadPrescriptionHistory() {
         const historyDiv = document.getElementById("prescriptionHistory");
+        historyDiv.innerHTML =
+          '<p style="color:#999;text-align:center;">Loading...</p>';
 
-        if (history.length === 0) {
+        const { data: history, error } = await window._sb
+          .from("prescriptions")
+          .select("*")
+          .order("created_at", { ascending: false })
+          .limit(50);
+
+        if (error || !history || history.length === 0) {
           historyDiv.innerHTML =
             '<p style="color: #999; text-align: center;">No prescriptions yet</p>';
           return;
@@ -1141,16 +1331,16 @@
 
         historyDiv.innerHTML = history
           .map(
-            (p, index) => `
+            (p) => `
         <div style="padding: 15px; border-bottom: 1px solid #eee;">
           <div style="display: flex; justify-content: space-between; align-items: start;">
             <div>
-              <h4 style="margin: 0 0 5px 0; color: #0f172a;">${p.patientName}</h4>
+              <h4 style="margin: 0 0 5px 0; color: #0f172a;">${p.patient_name}</h4>
               <p style="margin: 3px 0; font-size: 0.9rem; color: #666;">
-                <strong>Date:</strong> ${p.date} | <strong>Diagnosis:</strong> ${p.diagnosis}
+                <strong>Date:</strong> ${p.prescription_date} | <strong>Diagnosis:</strong> ${p.diagnosis || "—"}
               </p>
             </div>
-            <button onclick="alert('Patient: ${p.patientName}\\nDiagnosis: ${p.diagnosis}\\nDate: ${p.date}')" style="background: #059669; color: #fff; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer;">View</button>
+            <button onclick="alert('Patient: ${p.patient_name}\\nDiagnosis: ${p.diagnosis}\\nDate: ${p.prescription_date}')" style="background: #059669; color: #fff; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer;">View</button>
           </div>
         </div>
       `,
@@ -1160,6 +1350,110 @@
 
       function clearForm() {
         document.getElementById("prescriptionForm").reset();
+      }
+
+      /* ── Online Enquiries (Supabase) ─────────── */
+      async function updateEnquiryBadge() {
+        const { data } = await window._sb
+          .from("online_enquiries")
+          .select("id")
+          .eq("status", "new");
+        const newCount = data ? data.length : 0;
+        const badge = document.getElementById("enquiryBadge");
+        if (newCount > 0) {
+          badge.textContent = newCount;
+          badge.classList.remove("hidden");
+        } else {
+          badge.classList.add("hidden");
+        }
+      }
+
+      async function loadOnlineEnquiries() {
+        const container = document.getElementById("enquiryTableContainer");
+        container.innerHTML =
+          '<div class="enquiry-empty"><i class="fas fa-spinner fa-spin"></i> Loading enquiries...</div>';
+
+        const { data: enquiries, error } = await window._sb
+          .from("online_enquiries")
+          .select("*")
+          .order("created_at", { ascending: false });
+
+        if (error || !enquiries || enquiries.length === 0) {
+          container.innerHTML =
+            '<div class="enquiry-empty"><i class="fas fa-inbox" style="font-size:2rem;display:block;margin-bottom:10px;"></i>No online enquiries yet.</div>';
+          return;
+        }
+
+        container.innerHTML = `
+          <table class="enquiry-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Message</th>
+                <th>Received</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${enquiries
+                .map((e, i) => {
+                  const dt = new Date(e.created_at);
+                  const dateStr = dt.toLocaleDateString("en-IN", {
+                    day: "2-digit",
+                    month: "short",
+                    year: "numeric",
+                  });
+                  const timeStr = dt.toLocaleTimeString("en-IN", {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  });
+                  const isNew = e.status === "new";
+                  return `<tr class="${isNew ? "new-row" : ""}">
+                  <td style="color:#94a3b8;font-size:0.8rem;">${i + 1}</td>
+                  <td><strong>${e.name || "—"}</strong></td>
+                  <td><a href="tel:${e.phone}" style="color:#0ea5e9;text-decoration:none;">${e.phone || "—"}</a></td>
+                  <td style="font-size:0.85rem;">${e.email || "—"}</td>
+                  <td style="max-width:200px;font-size:0.85rem;color:#64748b;">${e.message || '<em style="color:#cbd5e1;">No message</em>'}</td>
+                  <td style="font-size:0.8rem;white-space:nowrap;color:#64748b;">${dateStr}<br/>${timeStr}</td>
+                  <td>${isNew ? '<span class="tag-new">New</span>' : '<span class="tag-read">Read</span>'}</td>
+                  <td>
+                    <div class="enquiry-actions">
+                      ${isNew ? `<button class="btn-mark-read" onclick="markEnquiryRead(${e.id})"><i class="fas fa-check"></i> Mark Read</button>` : ""}
+                      <button class="btn-del-enquiry" onclick="deleteEnquiry(${e.id})"><i class="fas fa-trash"></i></button>
+                    </div>
+                  </td>
+                </tr>`;
+                })
+                .join("")}
+            </tbody>
+          </table>`;
+      }
+
+      async function markEnquiryRead(id) {
+        await window._sb
+          .from("online_enquiries")
+          .update({ status: "read" })
+          .eq("id", id);
+        loadOnlineEnquiries();
+        updateEnquiryBadge();
+      }
+
+      async function deleteEnquiry(id) {
+        if (!confirm("Delete this enquiry?")) return;
+        await window._sb.from("online_enquiries").delete().eq("id", id);
+        loadOnlineEnquiries();
+        updateEnquiryBadge();
+      }
+
+      async function clearAllEnquiries() {
+        if (!confirm("Clear all enquiries? This cannot be undone.")) return;
+        await window._sb.from("online_enquiries").delete().neq("id", 0);
+        loadOnlineEnquiries();
+        updateEnquiryBadge();
       }
 
       function handleLogout() {

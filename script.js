@@ -188,6 +188,19 @@
     submitBtn.disabled = true;
     submitBtn.innerHTML = '<i class="fab fa-whatsapp"></i> Opening WhatsApp…';
 
+    // Save enquiry to Supabase for Doctor Dashboard
+    try {
+      await window._sb.from("online_enquiries").insert({
+        name: $("#eName").value.trim(),
+        phone: $("#ePhone").value.trim(),
+        email: $("#eEmail").value.trim(),
+        message: $("#eMessage").value.trim(),
+        status: "new",
+      });
+    } catch (dbErr) {
+      console.warn("Supabase enquiry save failed:", dbErr);
+    }
+
     try {
       const whatsappUrl = buildWhatsAppUrl();
       const whatsappWindow = window.open(

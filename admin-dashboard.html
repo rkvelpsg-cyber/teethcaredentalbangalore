@@ -1,0 +1,437 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard - ASIAN DENTAL CLINIC</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #f5f5f5; color: #0f172a; }
+      .dashboard-container { display: grid; grid-template-columns: 240px 1fr; min-height: 100vh; }
+
+      /* Sidebar */
+      .sidebar {
+        background: linear-gradient(135deg, #1e40af 0%, #0ea5e9 100%);
+        color: #fff; padding: 28px 18px;
+        display: flex; flex-direction: column; height: 100vh; position: sticky; top: 0;
+      }
+      .sidebar-header { display: flex; align-items: center; gap: 10px; margin-bottom: 36px; font-size: 1.2rem; font-weight: 700; }
+      .sidebar-header i { font-size: 1.6rem; }
+      .sidebar-menu { list-style: none; flex: 1; }
+      .sidebar-menu li { margin-bottom: 8px; }
+      .sidebar-menu a {
+        display: flex; align-items: center; gap: 10px;
+        color: rgba(255,255,255,0.8); text-decoration: none;
+        padding: 11px 13px; border-radius: 8px;
+        transition: all 0.2s; cursor: pointer; font-size: 0.95rem;
+      }
+      .sidebar-menu a:hover, .sidebar-menu a.active { background: rgba(255,255,255,0.2); color: #fff; }
+      .sidebar-footer { margin-top: auto; padding-top: 18px; border-top: 1px solid rgba(255,255,255,0.15); }
+      .logout-btn {
+        width: 100%; padding: 10px; background: rgba(255,255,255,0.15);
+        color: #fff; border: 2px solid rgba(255,255,255,0.3);
+        border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.2s;
+      }
+      .logout-btn:hover { background: rgba(255,255,255,0.25); }
+
+      /* Main */
+      .main-content { padding: 28px; overflow-y: auto; }
+      .top-bar {
+        display: flex; justify-content: space-between; align-items: center;
+        margin-bottom: 28px; background: #fff; padding: 18px 22px;
+        border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,.08);
+      }
+      .top-bar h1 { font-size: 1.7rem; color: #0f172a; }
+      .admin-info { display: flex; align-items: center; gap: 12px; }
+      .admin-avatar {
+        width: 40px; height: 40px; border-radius: 50%;
+        background: linear-gradient(135deg, #1e40af, #0ea5e9);
+        display: flex; align-items: center; justify-content: center;
+        color: #fff; font-weight: 700; font-size: 0.85rem;
+      }
+
+      .content-section { display: none; }
+      .content-section.active { display: block; }
+
+      /* Stats */
+      .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px,1fr)); gap: 18px; margin-bottom: 28px; }
+      .stat-card { background: #fff; border-radius: 12px; padding: 18px; box-shadow: 0 2px 8px rgba(0,0,0,.08); }
+      .stat-icon { font-size: 1.8rem; margin-bottom: 10px; }
+      .stat-value { font-size: 1.8rem; font-weight: 700; color: #0f172a; margin-bottom: 4px; }
+      .stat-label { font-size: 0.82rem; color: #64748b; }
+
+      /* Table */
+      .table-wrap { background: #fff; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,.08); overflow-x: auto; }
+      .data-table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+      .data-table th {
+        background: #eff6ff; padding: 13px 15px; text-align: left;
+        font-weight: 700; color: #1e40af; border-bottom: 2px solid #bfdbfe; white-space: nowrap;
+      }
+      .data-table td { padding: 12px 15px; border-bottom: 1px solid #f1f5f9; vertical-align: top; color: #374151; }
+      .data-table tr:hover td { background: #f8fafc; }
+      .data-table tr:last-child td { border-bottom: none; }
+      .data-table tr.new-row td { background: #eff6ff; }
+
+      /* Tags */
+      .tag { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; }
+      .tag-pending  { background: #fef3c7; color: #d97706; }
+      .tag-confirmed { background: #dcfce7; color: #15803d; }
+      .tag-not_confirmed { background: #fee2e2; color: #dc2626; }
+      .tag-new { background: #dcfce7; color: #15803d; }
+      .tag-read { background: #f1f5f9; color: #64748b; }
+
+      /* Buttons */
+      .btn-confirm { padding: 6px 12px; background: #059669; color: #fff; border: none; border-radius: 5px; cursor: pointer; font-size: 0.8rem; font-weight: 600; margin: 2px; }
+      .btn-confirm:hover { background: #047857; }
+      .btn-notconfirm { padding: 6px 12px; background: #dc2626; color: #fff; border: none; border-radius: 5px; cursor: pointer; font-size: 0.8rem; font-weight: 600; margin: 2px; }
+      .btn-notconfirm:hover { background: #b91c1c; }
+      .btn-pending { padding: 6px 12px; background: #d97706; color: #fff; border: none; border-radius: 5px; cursor: pointer; font-size: 0.8rem; font-weight: 600; margin: 2px; }
+      .btn-pending:hover { background: #b45309; }
+      .btn-wa { padding: 6px 12px; background: #25d366; color: #fff; border: none; border-radius: 5px; cursor: pointer; font-size: 0.8rem; font-weight: 600; margin: 2px; }
+      .btn-wa:hover { background: #128c7e; }
+
+      /* Filter bar */
+      .filter-bar {
+        display: flex; flex-wrap: wrap; gap: 10px;
+        align-items: center; margin-bottom: 18px;
+      }
+      .filter-bar input[type="date"] {
+        padding: 7px 10px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 0.85rem;
+      }
+      .btn-filter { padding: 7px 14px; background: #1e40af; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.85rem; }
+      .btn-export { padding: 7px 14px; background: #0ea5e9; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.85rem; }
+
+      .empty-state { text-align: center; padding: 40px; color: #94a3b8; font-size: 0.95rem; }
+
+      /* Notes modal overlay */
+      .modal-overlay-admin {
+        display: none; position: fixed; inset: 0;
+        background: rgba(0,0,0,0.5); z-index: 999;
+        align-items: center; justify-content: center;
+      }
+      .modal-overlay-admin.open { display: flex; }
+      .modal-box-admin {
+        background: #fff; border-radius: 12px; padding: 28px;
+        width: 90%; max-width: 480px; box-shadow: 0 20px 60px rgba(0,0,0,.3);
+      }
+      .modal-box-admin h3 { margin-bottom: 16px; font-size: 1.2rem; color: #0f172a; }
+      .modal-box-admin textarea {
+        width: 100%; padding: 10px; border: 2px solid #e2e8f0;
+        border-radius: 8px; font-size: 0.9rem; min-height: 100px; resize: vertical;
+      }
+      .modal-box-admin textarea:focus { outline: none; border-color: #1e40af; }
+      .modal-actions { display: flex; gap: 10px; margin-top: 16px; }
+      .modal-actions button { flex: 1; padding: 10px; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; }
+
+      @media (max-width: 768px) {
+        .dashboard-container { grid-template-columns: 1fr; }
+        .sidebar { height: auto; flex-direction: row; flex-wrap: wrap; gap: 10px; }
+        .sidebar-header { margin-bottom: 0; min-width: 100%; }
+        .sidebar-menu { display: flex; flex: 1; gap: 8px; }
+        .sidebar-footer { min-width: 100%; padding-top: 8px; border-top: 1px solid rgba(255,255,255,.1); }
+        .main-content { padding: 16px; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="dashboard-container">
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <div class="sidebar-header">
+          <i class="fas fa-user-shield"></i>
+          <span>Admin Panel</span>
+        </div>
+        <ul class="sidebar-menu">
+          <li><a onclick="switchSection('dashboard')" class="menu-item active"><i class="fas fa-chart-bar"></i> Dashboard</a></li>
+          <li><a onclick="switchSection('assigned')" class="menu-item"><i class="fas fa-tasks"></i> Assigned Enquiries</a></li>
+          <li><a onclick="switchSection('confirmed')" class="menu-item"><i class="fas fa-calendar-check"></i> Confirmed Appointments</a></li>
+        </ul>
+        <div class="sidebar-footer">
+          <button class="logout-btn" onclick="handleLogout()">
+            <i class="fas fa-sign-out-alt"></i> Logout
+          </button>
+        </div>
+      </div>
+
+      <!-- Main Content -->
+      <div class="main-content">
+        <div class="top-bar">
+          <h1 id="pageTitle">Admin Dashboard</h1>
+          <div class="admin-info">
+            <span id="adminNameDisplay">Admin Staff</span>
+            <div class="admin-avatar">AS</div>
+          </div>
+        </div>
+
+        <!-- Dashboard Section -->
+        <div id="dashboard" class="content-section active">
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-icon" style="color:#1e40af;"><i class="fas fa-tasks"></i></div>
+              <div class="stat-value" id="statAssigned">—</div>
+              <div class="stat-label">Assigned to Me</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon" style="color:#f59e0b;"><i class="fas fa-clock"></i></div>
+              <div class="stat-value" id="statPending">—</div>
+              <div class="stat-label">Pending</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon" style="color:#059669;"><i class="fas fa-calendar-check"></i></div>
+              <div class="stat-value" id="statConfirmed">—</div>
+              <div class="stat-label">Confirmed</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon" style="color:#dc2626;"><i class="fas fa-calendar-times"></i></div>
+              <div class="stat-value" id="statNotConfirmed">—</div>
+              <div class="stat-label">Not Confirmed</div>
+            </div>
+          </div>
+          <p style="color:#64748b;text-align:center;margin-top:10px;">Use the sidebar to manage assigned enquiries and appointments.</p>
+        </div>
+
+        <!-- Assigned Enquiries Section -->
+        <div id="assigned" class="content-section">
+          <h2 style="font-size:1.4rem;margin-bottom:16px;">Assigned Enquiries</h2>
+          <div class="filter-bar">
+            <input type="date" id="assignedFrom" />
+            <span style="color:#64748b;">to</span>
+            <input type="date" id="assignedTo" />
+            <button class="btn-filter" onclick="loadAssignedEnquiries()"><i class="fas fa-filter"></i> Filter</button>
+            <button class="btn-export" onclick="exportTableToExcel('assignedTable','assigned-enquiries')"><i class="fas fa-file-excel"></i> Export</button>
+          </div>
+          <div class="table-wrap">
+            <div id="assignedContainer"></div>
+          </div>
+        </div>
+
+        <!-- Confirmed Appointments Section -->
+        <div id="confirmed" class="content-section">
+          <h2 style="font-size:1.4rem;margin-bottom:16px;">Confirmed Appointments</h2>
+          <div class="filter-bar">
+            <input type="date" id="confFrom" />
+            <span style="color:#64748b;">to</span>
+            <input type="date" id="confTo" />
+            <button class="btn-filter" onclick="loadConfirmedAppointments()"><i class="fas fa-filter"></i> Filter</button>
+            <button class="btn-export" onclick="exportTableToExcel('confirmedTable','confirmed-appointments')"><i class="fas fa-file-excel"></i> Export</button>
+          </div>
+          <div class="table-wrap">
+            <div id="confirmedContainer"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Notes Modal -->
+    <div class="modal-overlay-admin" id="notesModal">
+      <div class="modal-box-admin">
+        <h3><i class="fas fa-sticky-note"></i> Add Notes & Set Appointment</h3>
+        <input type="hidden" id="modalEnquiryId" />
+        <div style="margin-bottom:12px;">
+          <label style="font-weight:600;display:block;margin-bottom:6px;">Appointment Date</label>
+          <input type="date" id="modalApptDate" style="width:100%;padding:8px;border:2px solid #e2e8f0;border-radius:6px;" />
+        </div>
+        <div style="margin-bottom:12px;">
+          <label style="font-weight:600;display:block;margin-bottom:6px;">Appointment Time</label>
+          <input type="time" id="modalApptTime" style="width:100%;padding:8px;border:2px solid #e2e8f0;border-radius:6px;" />
+        </div>
+        <div>
+          <label style="font-weight:600;display:block;margin-bottom:6px;">Admin Notes</label>
+          <textarea id="modalNotes" placeholder="Add notes about this patient / appointment…"></textarea>
+        </div>
+        <div class="modal-actions">
+          <button style="background:#059669;color:#fff;" onclick="saveNotesAndConfirm('confirmed')"><i class="fas fa-check"></i> Confirm Appointment</button>
+          <button style="background:#dc2626;color:#fff;" onclick="saveNotesAndConfirm('not_confirmed')"><i class="fas fa-times"></i> Not Confirmed</button>
+          <button style="background:#e2e8f0;color:#374151;" onclick="closeNotesModal()">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+    <script src="supabase-config.js"></script>
+    <script>
+      const sb = window._sb;
+      let adminId = "";
+
+      window.addEventListener("load", function () {
+        adminId = localStorage.getItem("adminId");
+        if (!adminId) { window.location.href = "admin-login.html"; return; }
+        document.getElementById("adminNameDisplay").textContent = localStorage.getItem("adminName") || "Admin";
+        loadDashboardStats();
+      });
+
+      function switchSection(sectionId) {
+        document.querySelectorAll(".content-section").forEach(s => s.classList.remove("active"));
+        document.querySelectorAll(".menu-item").forEach(i => i.classList.remove("active"));
+        document.getElementById(sectionId).classList.add("active");
+        event.target.closest(".menu-item").classList.add("active");
+        if (sectionId === "assigned")  loadAssignedEnquiries();
+        if (sectionId === "confirmed") loadConfirmedAppointments();
+      }
+
+      /* ── Stats ─────────────────────────────────── */
+      async function loadDashboardStats() {
+        const { data } = await sb.from("online_enquiries").select("appointment_status").eq("assigned_to", adminId);
+        if (!data) return;
+        document.getElementById("statAssigned").textContent    = data.length;
+        document.getElementById("statPending").textContent     = data.filter(e => e.appointment_status === "pending").length;
+        document.getElementById("statConfirmed").textContent   = data.filter(e => e.appointment_status === "confirmed").length;
+        document.getElementById("statNotConfirmed").textContent= data.filter(e => e.appointment_status === "not_confirmed").length;
+      }
+
+      /* ── Assigned Enquiries ─────────────────────── */
+      async function loadAssignedEnquiries() {
+        const container = document.getElementById("assignedContainer");
+        container.innerHTML = '<div class="empty-state"><i class="fas fa-spinner fa-spin"></i> Loading…</div>';
+        let q = sb.from("online_enquiries").select("*").eq("assigned_to", adminId).order("created_at", { ascending: false });
+        const from = document.getElementById("assignedFrom").value;
+        const to   = document.getElementById("assignedTo").value;
+        if (from) q = q.gte("created_at", from);
+        if (to)   q = q.lte("created_at", to + "T23:59:59");
+        const { data, error } = await q;
+        if (error || !data || data.length === 0) {
+          container.innerHTML = '<div class="empty-state"><i class="fas fa-inbox" style="font-size:2rem;display:block;margin-bottom:10px;"></i>No assigned enquiries.</div>';
+          return;
+        }
+        container.innerHTML = `
+          <table class="data-table" id="assignedTable">
+            <thead><tr>
+              <th>#</th><th>Name</th><th>Phone</th><th>Email</th><th>Message</th>
+              <th>Received</th><th>Appt Status</th><th>Appt Date</th><th>Notes</th><th>Actions</th>
+            </tr></thead>
+            <tbody>
+              ${data.map((e, i) => {
+                const dt = new Date(e.created_at);
+                const apptTag = {
+                  pending:       '<span class="tag tag-pending">Pending</span>',
+                  confirmed:     '<span class="tag tag-confirmed">Confirmed</span>',
+                  not_confirmed: '<span class="tag tag-not_confirmed">Not Confirmed</span>'
+                }[e.appointment_status] || e.appointment_status;
+                return `<tr>
+                  <td>${i+1}</td>
+                  <td><strong>${e.name||'—'}</strong></td>
+                  <td><a href="tel:${e.phone}" style="color:#1e40af;text-decoration:none;font-weight:600;">${e.phone||'—'}</a></td>
+                  <td style="font-size:.85rem;">${e.email||'—'}</td>
+                  <td style="max-width:160px;font-size:.85rem;color:#64748b;">${e.message||'—'}</td>
+                  <td style="font-size:.8rem;white-space:nowrap;color:#64748b;">${dt.toLocaleDateString('en-IN')}</td>
+                  <td>${apptTag}</td>
+                  <td style="font-size:.85rem;">${e.appointment_date||'—'} ${e.appointment_time||''}</td>
+                  <td style="font-size:.82rem;max-width:160px;color:#64748b;">${e.admin_notes||'—'}</td>
+                  <td>
+                    <div style="display:flex;flex-wrap:wrap;gap:4px;">
+                      <button class="btn-confirm" onclick="openNotesModal(${e.id},'${(e.appointment_date||'')}','${(e.appointment_time||'')}',\`${(e.admin_notes||'').replace(/`/g,"'")}\`)">
+                        <i class="fas fa-edit"></i> Update
+                      </button>
+                      ${e.appointment_status === 'confirmed' ? `<button class="btn-wa" onclick="sendWhatsApp('${e.phone}','${e.name}','${e.appointment_date||''}','${e.appointment_time||''}')"><i class="fab fa-whatsapp"></i> WhatsApp</button>` : ''}
+                    </div>
+                  </td>
+                </tr>`;
+              }).join('')}
+            </tbody>
+          </table>`;
+      }
+
+      /* ── Confirmed Appointments ─────────────────── */
+      async function loadConfirmedAppointments() {
+        const container = document.getElementById("confirmedContainer");
+        container.innerHTML = '<div class="empty-state"><i class="fas fa-spinner fa-spin"></i> Loading…</div>';
+        let q = sb.from("online_enquiries").select("*").eq("appointment_status","confirmed").order("appointment_date", { ascending: true });
+        const from = document.getElementById("confFrom").value;
+        const to   = document.getElementById("confTo").value;
+        if (from) q = q.gte("appointment_date", from);
+        if (to)   q = q.lte("appointment_date", to);
+        const { data, error } = await q;
+        if (error || !data || data.length === 0) {
+          container.innerHTML = '<div class="empty-state"><i class="fas fa-calendar-times" style="font-size:2rem;display:block;margin-bottom:10px;"></i>No confirmed appointments.</div>';
+          return;
+        }
+        container.innerHTML = `
+          <table class="data-table" id="confirmedTable">
+            <thead><tr>
+              <th>#</th><th>Name</th><th>Phone</th><th>Email</th>
+              <th>Appt Date</th><th>Appt Time</th><th>Message</th><th>Notes</th><th>WhatsApp</th>
+            </tr></thead>
+            <tbody>
+              ${data.map((e,i) => `<tr>
+                <td>${i+1}</td>
+                <td><strong>${e.name||'—'}</strong></td>
+                <td><a href="tel:${e.phone}" style="color:#1e40af;text-decoration:none;font-weight:600;">${e.phone||'—'}</a></td>
+                <td style="font-size:.85rem;">${e.email||'—'}</td>
+                <td style="font-weight:600;color:#059669;">${e.appointment_date||'—'}</td>
+                <td>${e.appointment_time||'—'}</td>
+                <td style="max-width:160px;font-size:.85rem;">${e.message||'—'}</td>
+                <td style="font-size:.82rem;max-width:160px;">${e.admin_notes||'—'}</td>
+                <td><button class="btn-wa" onclick="sendWhatsApp('${e.phone}','${e.name}','${e.appointment_date||''}','${e.appointment_time||''}')"><i class="fab fa-whatsapp"></i> Send</button></td>
+              </tr>`).join('')}
+            </tbody>
+          </table>`;
+      }
+
+      /* ── Notes Modal ────────────────────────────── */
+      function openNotesModal(id, date, time, notes) {
+        document.getElementById("modalEnquiryId").value  = id;
+        document.getElementById("modalApptDate").value   = date;
+        document.getElementById("modalApptTime").value   = time;
+        document.getElementById("modalNotes").value      = notes;
+        document.getElementById("notesModal").classList.add("open");
+      }
+      function closeNotesModal() {
+        document.getElementById("notesModal").classList.remove("open");
+      }
+
+      async function saveNotesAndConfirm(status) {
+        const id    = document.getElementById("modalEnquiryId").value;
+        const date  = document.getElementById("modalApptDate").value;
+        const time  = document.getElementById("modalApptTime").value;
+        const notes = document.getElementById("modalNotes").value.trim();
+
+        const { data, error } = await sb.from("online_enquiries").update({
+          appointment_status: status,
+          appointment_date:   date || null,
+          appointment_time:   time || null,
+          admin_notes:        notes || null,
+        }).eq("id", id).select().single();
+
+        if (error) { alert("Error saving: " + error.message); return; }
+        closeNotesModal();
+        loadDashboardStats();
+
+        if (status === "confirmed" && data) {
+          const send = confirm(`Appointment confirmed! Send WhatsApp notification to ${data.name} (${data.phone})?`);
+          if (send) sendWhatsApp(data.phone, data.name, date, time);
+        }
+        loadAssignedEnquiries();
+      }
+
+      /* ── WhatsApp Notification ──────────────────── */
+      function sendWhatsApp(phone, name, date, time) {
+        const cleanPhone = phone.replace(/[^0-9]/g, "");
+        const patientPhone = cleanPhone.startsWith("91") ? cleanPhone : "91" + cleanPhone;
+        const dateStr = date ? new Date(date).toLocaleDateString("en-IN", { weekday:"long", day:"2-digit", month:"long", year:"numeric" }) : "as scheduled";
+        const timeStr = time || "";
+        const msg = `Dear ${name},\n\nYour appointment at *Asian Dental Clinic, Hoskote* has been confirmed! 🎉\n\n📅 Date: ${dateStr}\n⏰ Time: ${timeStr}\n📍 Srimad Dathathreya Ashrama Rd, M V Extension, Hoskote\n📞 +91-9663252315\n\nPlease arrive 5 minutes early. See you soon!\n\n*Asian Dental Clinic Team*`;
+        window.open(`https://wa.me/${patientPhone}?text=${encodeURIComponent(msg)}`, "_blank");
+      }
+
+      /* ── Excel Export ───────────────────────────── */
+      function exportTableToExcel(tableId, filename) {
+        const table = document.getElementById(tableId);
+        if (!table) { alert("No data to export."); return; }
+        const wb = XLSX.utils.book_new();
+        const ws = XLSX.utils.table_to_sheet(table);
+        XLSX.utils.book_append_sheet(wb, ws, "Data");
+        XLSX.writeFile(wb, filename + "_" + new Date().toISOString().slice(0,10) + ".xlsx");
+      }
+
+      function handleLogout() {
+        if (confirm("Are you sure you want to logout?")) {
+          localStorage.removeItem("adminId");
+          localStorage.removeItem("adminName");
+          window.location.href = "admin-login.html";
+        }
+      }
+    </script>
+  </body>
+</html>
