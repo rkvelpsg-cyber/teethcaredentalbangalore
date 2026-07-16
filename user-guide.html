@@ -1,0 +1,974 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Guide – Asian Dental Clinic Website</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap");
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family:
+          "Inter",
+          -apple-system,
+          sans-serif;
+        color: #1e293b;
+        background: #fff;
+        font-size: 13px;
+        line-height: 1.6;
+      }
+
+      /* ── Print styles ── */
+      @media print {
+        .no-print {
+          display: none !important;
+        }
+        body {
+          font-size: 11px;
+        }
+        .page-break {
+          page-break-before: always;
+        }
+        section {
+          page-break-inside: avoid;
+        }
+      }
+
+      /* ── Layout ── */
+      .wrapper {
+        max-width: 850px;
+        margin: 0 auto;
+        padding: 40px 48px;
+      }
+
+      /* ── Print button ── */
+      .no-print {
+        text-align: center;
+        padding: 16px;
+        background: #f0fdf4;
+        border-bottom: 2px solid #d1fae5;
+        font-size: 0.9rem;
+      }
+      .btn-print {
+        background: #059669;
+        color: #fff;
+        border: none;
+        padding: 10px 24px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 700;
+        font-size: 0.9rem;
+        margin-left: 12px;
+      }
+      .btn-print:hover {
+        background: #047857;
+      }
+
+      /* ── Cover page ── */
+      .cover {
+        text-align: center;
+        padding: 60px 0 50px;
+        border-bottom: 3px solid #0ea5e9;
+        margin-bottom: 40px;
+      }
+      .cover-logo {
+        width: 70px;
+        height: 70px;
+        background: linear-gradient(135deg, #0f766e, #06b6d4);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 20px;
+        font-size: 2rem;
+        color: #fff;
+      }
+      .cover h1 {
+        font-size: 2rem;
+        font-weight: 800;
+        color: #0f172a;
+        margin-bottom: 8px;
+      }
+      .cover h2 {
+        font-size: 1.1rem;
+        font-weight: 400;
+        color: #64748b;
+        margin-bottom: 20px;
+      }
+      .cover .meta {
+        display: inline-flex;
+        gap: 24px;
+        background: #f8fafc;
+        padding: 12px 28px;
+        border-radius: 50px;
+        font-size: 0.82rem;
+        color: #64748b;
+      }
+      .cover .meta span {
+        font-weight: 600;
+        color: #0f172a;
+      }
+
+      /* ── TOC ── */
+      .toc {
+        background: #f8fafc;
+        border-radius: 12px;
+        padding: 24px 28px;
+        margin-bottom: 36px;
+      }
+      .toc h3 {
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: #0f766e;
+        margin-bottom: 14px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+      .toc ol {
+        padding-left: 20px;
+      }
+      .toc li {
+        margin-bottom: 6px;
+        color: #334155;
+      }
+      .toc a {
+        color: #0ea5e9;
+        text-decoration: none;
+      }
+
+      /* ── Section headings ── */
+      h2.section-title {
+        font-size: 1.25rem;
+        font-weight: 800;
+        color: #0f172a;
+        border-left: 4px solid #0ea5e9;
+        padding-left: 14px;
+        margin: 36px 0 16px;
+      }
+      h3.sub-title {
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: #0f766e;
+        margin: 20px 0 8px;
+      }
+      h4.mini-title {
+        font-size: 0.85rem;
+        font-weight: 700;
+        color: #334155;
+        margin: 14px 0 6px;
+      }
+
+      p {
+        margin-bottom: 10px;
+        color: #374151;
+      }
+
+      /* ── Info box ── */
+      .info-box {
+        background: #eff6ff;
+        border-left: 4px solid #3b82f6;
+        border-radius: 0 8px 8px 0;
+        padding: 12px 16px;
+        margin: 14px 0;
+      }
+      .info-box.green {
+        background: #f0fdf4;
+        border-color: #22c55e;
+      }
+      .info-box.orange {
+        background: #fff7ed;
+        border-color: #f97316;
+      }
+      .info-box.purple {
+        background: #f5f3ff;
+        border-color: #8b5cf6;
+      }
+      .info-box strong {
+        display: block;
+        margin-bottom: 4px;
+        font-size: 0.82rem;
+        text-transform: uppercase;
+        letter-spacing: 0.4px;
+      }
+
+      /* ── Credential table ── */
+      .cred-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 14px 0;
+        font-size: 0.85rem;
+      }
+      .cred-table th {
+        background: #0f766e;
+        color: #fff;
+        padding: 9px 14px;
+        text-align: left;
+        font-weight: 600;
+      }
+      .cred-table td {
+        padding: 9px 14px;
+        border-bottom: 1px solid #e2e8f0;
+      }
+      .cred-table tr:last-child td {
+        border-bottom: none;
+      }
+      .cred-table tr:nth-child(even) td {
+        background: #f8fafc;
+      }
+      code {
+        background: #1e293b;
+        color: #38bdf8;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-size: 0.82rem;
+        font-family: "Courier New", monospace;
+      }
+
+      /* ── Flow steps ── */
+      .flow {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        margin: 16px 0;
+      }
+      .flow-step {
+        display: flex;
+        align-items: flex-start;
+        gap: 14px;
+        padding: 12px 0;
+        border-bottom: 1px dashed #e2e8f0;
+      }
+      .flow-step:last-child {
+        border-bottom: none;
+      }
+      .flow-num {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #0f766e, #0ea5e9);
+        color: #fff;
+        font-weight: 800;
+        font-size: 0.85rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        margin-top: 2px;
+      }
+      .flow-content strong {
+        display: block;
+        font-size: 0.88rem;
+        color: #0f172a;
+        margin-bottom: 2px;
+      }
+      .flow-content span {
+        font-size: 0.83rem;
+        color: #64748b;
+      }
+
+      /* ── Feature grid ── */
+      .feature-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        margin: 14px 0;
+      }
+      .feature-card {
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        padding: 14px;
+      }
+      .feature-card .icon {
+        font-size: 1.3rem;
+        margin-bottom: 6px;
+      }
+      .feature-card h4 {
+        font-size: 0.85rem;
+        font-weight: 700;
+        color: #0f172a;
+        margin-bottom: 4px;
+      }
+      .feature-card p {
+        font-size: 0.8rem;
+        color: #64748b;
+        margin: 0;
+      }
+
+      /* ── Role badge ── */
+      .role-badge {
+        display: inline-block;
+        padding: 3px 12px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        margin-right: 6px;
+      }
+      .badge-patient {
+        background: #dbeafe;
+        color: #1d4ed8;
+      }
+      .badge-doctor {
+        background: #dcfce7;
+        color: #15803d;
+      }
+      .badge-admin {
+        background: #ede9fe;
+        color: #6d28d9;
+      }
+
+      /* ── Divider ── */
+      .divider {
+        border: none;
+        border-top: 2px solid #f1f5f9;
+        margin: 30px 0;
+      }
+
+      /* ── Footer ── */
+      .doc-footer {
+        margin-top: 48px;
+        padding-top: 20px;
+        border-top: 2px solid #e2e8f0;
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.78rem;
+        color: #94a3b8;
+      }
+
+      ul.check-list {
+        list-style: none;
+        padding: 0;
+        margin: 8px 0;
+      }
+      ul.check-list li {
+        padding: 4px 0;
+        padding-left: 22px;
+        position: relative;
+        font-size: 0.85rem;
+        color: #374151;
+      }
+      ul.check-list li::before {
+        content: "✓";
+        position: absolute;
+        left: 0;
+        color: #059669;
+        font-weight: 700;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="no-print">
+      <strong>📄 Asian Dental Clinic – User Guide</strong>
+      To save as PDF: click the button below or use
+      <strong>Ctrl+P → Save as PDF</strong>
+      <button class="btn-print" onclick="window.print()">
+        🖨 Print / Save as PDF
+      </button>
+    </div>
+
+    <div class="wrapper">
+      <!-- COVER -->
+      <div class="cover">
+        <div class="cover-logo">🦷</div>
+        <h1>Asian Dental Clinic</h1>
+        <h2>Website User Guide &amp; Portal Documentation</h2>
+        <div class="meta">
+          Version: <span>1.0</span> &nbsp;|&nbsp; Date:
+          <span>July 2026</span> &nbsp;|&nbsp; Prepared for:
+          <span>Clinic Staff</span>
+        </div>
+      </div>
+
+      <!-- TABLE OF CONTENTS -->
+      <div class="toc">
+        <h3>Table of Contents</h3>
+        <ol>
+          <li>Website Overview</li>
+          <li>Patient Features – Public Website</li>
+          <li>Book a Consultation – Enquiry Form</li>
+          <li>Doctor Login &amp; Dashboard</li>
+          <li>Admin Login &amp; Dashboard</li>
+          <li>End-to-End Appointment Workflow</li>
+          <li>Login Credentials Summary</li>
+          <li>Support &amp; Troubleshooting</li>
+        </ol>
+      </div>
+
+      <!-- 1. WEBSITE OVERVIEW -->
+      <h2 class="section-title">1. Website Overview</h2>
+      <p>
+        The <strong>Asian Dental Clinic website</strong> is a fully responsive
+        dental clinic portal built for
+        <strong
+          >Asian Dental Clinic &amp; Implant Center, Hoskote, Bengaluru</strong
+        >. It serves three types of users:
+      </p>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="icon">🧑‍⚕️</div>
+          <h4>Patients (Public)</h4>
+          <p>
+            Browse services, view gallery, read reviews, and book consultations
+            online.
+          </p>
+        </div>
+        <div class="feature-card">
+          <div class="icon">👨‍⚕️</div>
+          <h4>Doctors</h4>
+          <p>
+            View patient enquiries, appointments, and assign cases to admin
+            staff.
+          </p>
+        </div>
+        <div class="feature-card">
+          <div class="icon">🛡️</div>
+          <h4>Admin Staff</h4>
+          <p>
+            Call patients, confirm/reject appointments, send WhatsApp
+            notifications.
+          </p>
+        </div>
+        <div class="feature-card">
+          <div class="icon">☁️</div>
+          <h4>Cloud Database</h4>
+          <p>
+            All enquiries and appointments stored securely in Supabase
+            (PostgreSQL).
+          </p>
+        </div>
+      </div>
+
+      <div class="info-box">
+        <strong>Website URL (Production)</strong>
+        Hosted on Netlify — deploy from GitHub repository:
+        <code>rkvelpsg-cyber/teethcaredentalbangalore</code>
+      </div>
+
+      <hr class="divider" />
+
+      <!-- 2. PATIENT FEATURES -->
+      <h2 class="section-title">2. Patient Features – Public Website</h2>
+      <p>
+        When a patient visits the website they can access the following
+        sections:
+      </p>
+
+      <h3 class="sub-title">Navigation Menu</h3>
+      <ul class="check-list">
+        <li>
+          <strong>Home</strong> – Hero banner, stats (50K+ patients, 20+ years,
+          98% satisfaction)
+        </li>
+        <li>
+          <strong>Services</strong> – All 11 dental treatments with images and
+          descriptions
+        </li>
+        <li>
+          <strong>Why Us</strong> – About the clinic, doctor profiles, JustDial
+          5-star badge
+        </li>
+        <li>
+          <strong>Gallery</strong> – Auto-scrolling photo gallery of the clinic
+        </li>
+        <li>
+          <strong>Testimonials</strong> – Real Google Reviews carousel
+          (auto-plays every 5 seconds)
+        </li>
+        <li><strong>FAQ</strong> – Common patient questions answered</li>
+        <li>
+          <strong>Contact</strong> – Phone, hours, WhatsApp chat, and Google
+          Maps embed
+        </li>
+      </ul>
+
+      <h3 class="sub-title">Treatments Available on the Website</h3>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <h4>General Dentistry</h4>
+          <p>Routine check-ups, fillings, cleanings</p>
+        </div>
+        <div class="feature-card">
+          <h4>Smile Designing</h4>
+          <p>Custom cosmetic treatment plans</p>
+        </div>
+        <div class="feature-card">
+          <h4>Dental Implants</h4>
+          <p>Titanium implant technology</p>
+        </div>
+        <div class="feature-card">
+          <h4>Orthodontics &amp; Braces</h4>
+          <p>Metal, ceramic braces &amp; aligners</p>
+        </div>
+        <div class="feature-card">
+          <h4>Teeth Whitening</h4>
+          <p>In-office &amp; take-home whitening</p>
+        </div>
+        <div class="feature-card">
+          <h4>Root Canal Treatment</h4>
+          <p>Pain-free rotary RCT</p>
+        </div>
+        <div class="feature-card">
+          <h4>Crowns &amp; Veneers</h4>
+          <p>Ceramic crowns &amp; porcelain veneers</p>
+        </div>
+        <div class="feature-card">
+          <h4>Paediatric Dentistry</h4>
+          <p>Child-friendly dental care</p>
+        </div>
+        <div class="feature-card">
+          <h4>Full Mouth Rehabilitation</h4>
+          <p>Complete oral restoration</p>
+        </div>
+        <div class="feature-card">
+          <h4>Crowns &amp; Bridges</h4>
+          <p>Precision-crafted restorations</p>
+        </div>
+        <div class="feature-card">
+          <h4>Laser Dentistry</h4>
+          <p>Painless advanced laser treatments</p>
+        </div>
+      </div>
+
+      <hr class="divider" />
+
+      <!-- 3. BOOK CONSULTATION -->
+      <h2 class="section-title">3. Book a Consultation – Enquiry Form</h2>
+      <p>
+        Patients can click the <strong>"Book Consultation"</strong> or
+        <strong>"Book Appointment"</strong> button anywhere on the website to
+        open the enquiry pop-up form.
+      </p>
+
+      <h3 class="sub-title">How the Form Works</h3>
+      <div class="flow">
+        <div class="flow-step">
+          <div class="flow-num">1</div>
+          <div class="flow-content">
+            <strong>Patient fills in the form</strong>
+            <span
+              >Fields: Full Name, Phone Number, Email Address, Message
+              (optional)</span
+            >
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num">2</div>
+          <div class="flow-content">
+            <strong>Click "Send Enquiry"</strong>
+            <span
+              >WhatsApp opens automatically to clinic number +91-9663252315 with
+              patient details pre-filled</span
+            >
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num">3</div>
+          <div class="flow-content">
+            <strong>Data saved to cloud database</strong>
+            <span
+              >Patient details are saved to Supabase (online_enquiries table) in
+              real time</span
+            >
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num">4</div>
+          <div class="flow-content">
+            <strong>Doctor receives the enquiry</strong>
+            <span
+              >The enquiry appears in Dr. Humayun's Doctor Dashboard under
+              "Online Enquiry"</span
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="info-box green">
+        <strong>💡 Note</strong>
+        The "Book a Consultation" pop-up does NOT appear automatically when the
+        page loads. It only opens when the patient clicks a button — this was
+        intentionally configured.
+      </div>
+
+      <hr class="divider" />
+
+      <!-- 4. DOCTOR LOGIN -->
+      <div class="page-break"></div>
+      <h2 class="section-title">4. Doctor Login &amp; Dashboard</h2>
+
+      <h3 class="sub-title">How to Access</h3>
+      <p>
+        Click the <strong>"Doctor Login"</strong> button in the website header
+        (green button). This opens the Doctor Portal login page.
+      </p>
+
+      <table class="cred-table">
+        <tr>
+          <th>Field</th>
+          <th>Dr. Humayun Aleem</th>
+          <th>Dr. Ameena Tabassum</th>
+        </tr>
+        <tr>
+          <td>Doctor ID</td>
+          <td><code>drhumayun</code></td>
+          <td><code>drameena</code></td>
+        </tr>
+        <tr>
+          <td>Password</td>
+          <td>Set during SQL setup</td>
+          <td>Set during SQL setup</td>
+        </tr>
+        <tr>
+          <td>Login URL</td>
+          <td colspan="2"><code>/doctor-login.html</code></td>
+        </tr>
+      </table>
+
+      <div class="info-box orange">
+        <strong>⚠️ Password Security</strong>
+        Passwords are hashed using SHA-256 and verified against the Supabase
+        <code>doctors</code> table. Passwords are never stored in plain text.
+      </div>
+
+      <h3 class="sub-title">Doctor Dashboard Sections</h3>
+
+      <h4 class="mini-title">📊 Dashboard (Home)</h4>
+      <p>Shows 4 live statistics pulled from the database:</p>
+      <ul class="check-list">
+        <li>Confirmed Appointments — total appointments confirmed by admin</li>
+        <li>Total Enquiries — all online enquiries received</li>
+        <li>Pending Enquiries — enquiries with no action yet</li>
+        <li>New (Unread) — enquiries not yet read by the doctor</li>
+      </ul>
+
+      <h4 class="mini-title">📅 Appointments</h4>
+      <ul class="check-list">
+        <li>
+          Shows all <strong>confirmed appointments</strong> from the database
+        </li>
+        <li>Date range filter — filter by start and end date</li>
+        <li>Export to Excel — download appointment data as .xlsx file</li>
+      </ul>
+
+      <h4 class="mini-title">📬 Online Enquiry</h4>
+      <ul class="check-list">
+        <li>Shows all patient enquiries submitted via the website form</li>
+        <li>Red badge on menu shows count of new (unread) enquiries</li>
+        <li>Date range filter + Export to Excel available</li>
+        <li>
+          <strong>Mark Read</strong> — marks enquiry as read (badge count
+          decreases)
+        </li>
+        <li>
+          <strong>Assign Admin</strong> — sends the enquiry to the Admin Staff
+          dashboard for follow-up
+        </li>
+        <li><strong>Delete</strong> — permanently removes the enquiry</li>
+      </ul>
+
+      <div class="info-box green">
+        <strong>✅ Primary Doctor</strong>
+        Dr. Humayun Aleem is the primary doctor. All online enquiries from
+        patients are first visible in his dashboard. He reviews them and assigns
+        them to the Admin Staff for calling and confirmation.
+      </div>
+
+      <hr class="divider" />
+
+      <!-- 5. ADMIN LOGIN -->
+      <h2 class="section-title">5. Admin Login &amp; Dashboard</h2>
+
+      <h3 class="sub-title">How to Access</h3>
+      <p>
+        Click the <strong>"Admin Login"</strong> button in the website header
+        (blue button). This opens the Admin Portal login page.
+      </p>
+
+      <table class="cred-table">
+        <tr>
+          <th>Field</th>
+          <th>Value</th>
+        </tr>
+        <tr>
+          <td>Admin ID</td>
+          <td><code>admin01</code></td>
+        </tr>
+        <tr>
+          <td>Password</td>
+          <td>Set during SQL setup (default: <code>Admin@2026</code>)</td>
+        </tr>
+        <tr>
+          <td>Login URL</td>
+          <td><code>/admin-login.html</code></td>
+        </tr>
+      </table>
+
+      <h3 class="sub-title">Admin Dashboard Sections</h3>
+
+      <h4 class="mini-title">📊 Dashboard (Home)</h4>
+      <p>Live stats showing enquiries assigned to this admin:</p>
+      <ul class="check-list">
+        <li>Total Assigned — enquiries assigned by the doctor</li>
+        <li>Pending — awaiting admin action</li>
+        <li>Confirmed — appointments confirmed by admin</li>
+        <li>Not Confirmed — patient couldn't be reached or declined</li>
+      </ul>
+
+      <h4 class="mini-title">📋 Assigned Enquiries</h4>
+      <ul class="check-list">
+        <li>Shows enquiries assigned by Dr. Humayun to this admin</li>
+        <li>Date range filter + Export to Excel available</li>
+        <li>
+          <strong>Update button</strong> — opens a modal to set appointment
+          date, time, notes and status
+        </li>
+        <li>
+          Status options: <strong>Confirm Appointment</strong> /
+          <strong>Not Confirmed</strong>
+        </li>
+        <li>
+          WhatsApp button appears for confirmed appointments to send
+          notification to patient
+        </li>
+      </ul>
+
+      <h4 class="mini-title">✅ Confirmed Appointments</h4>
+      <ul class="check-list">
+        <li>Lists all confirmed appointments sorted by appointment date</li>
+        <li>Date range filter + Export to Excel</li>
+        <li>WhatsApp button to resend confirmation message to patient</li>
+      </ul>
+
+      <hr class="divider" />
+
+      <!-- 6. WORKFLOW -->
+      <div class="page-break"></div>
+      <h2 class="section-title">6. End-to-End Appointment Workflow</h2>
+      <p>
+        This is the complete journey from a patient's enquiry to a confirmed
+        appointment:
+      </p>
+
+      <div class="flow">
+        <div class="flow-step">
+          <div class="flow-num">1</div>
+          <div class="flow-content">
+            <strong
+              ><span class="role-badge badge-patient">Patient</span> Submits
+              enquiry online</strong
+            >
+            <span
+              >Patient fills "Book a Consultation" form on the website →
+              WhatsApp opens + data saved to Supabase</span
+            >
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num">2</div>
+          <div class="flow-content">
+            <strong
+              ><span class="role-badge badge-doctor">Doctor</span> Reviews
+              enquiry in dashboard</strong
+            >
+            <span
+              >Dr. Humayun logs in → sees new enquiry badge → opens "Online
+              Enquiry" section</span
+            >
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num">3</div>
+          <div class="flow-content">
+            <strong
+              ><span class="role-badge badge-doctor">Doctor</span> Assigns to
+              Admin</strong
+            >
+            <span
+              >Clicks "Assign Admin" button → enquiry moves to admin's dashboard
+              with status "Responded"</span
+            >
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num">4</div>
+          <div class="flow-content">
+            <strong
+              ><span class="role-badge badge-admin">Admin</span> Calls the
+              patient</strong
+            >
+            <span
+              >Admin logs in → opens "Assigned Enquiries" → calls patient's
+              phone number shown in the table</span
+            >
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num">5</div>
+          <div class="flow-content">
+            <strong
+              ><span class="role-badge badge-admin">Admin</span> Updates
+              appointment status</strong
+            >
+            <span
+              >Clicks "Update" → sets appointment date, time, notes → clicks
+              "Confirm Appointment" or "Not Confirmed"</span
+            >
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num">6</div>
+          <div class="flow-content">
+            <strong
+              ><span class="role-badge badge-admin">Admin</span> Sends WhatsApp
+              confirmation</strong
+            >
+            <span
+              >WhatsApp opens automatically to patient's number with appointment
+              details pre-filled in the message</span
+            >
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num">7</div>
+          <div class="flow-content">
+            <strong
+              ><span class="role-badge badge-doctor">Doctor</span> Sees
+              confirmed appointments</strong
+            >
+            <span
+              >Confirmed appointments appear in doctor's "Appointments" section
+              with all details</span
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="info-box purple">
+        <strong>📱 WhatsApp Notification</strong>
+        The clinic's WhatsApp number (+91-9663252315) must be active on the
+        admin's device for the WhatsApp confirmation message to be sent from the
+        clinic's number. The message is pre-filled with the patient's name,
+        appointment date and time.
+      </div>
+
+      <hr class="divider" />
+
+      <!-- 7. CREDENTIALS SUMMARY -->
+      <h2 class="section-title">7. Login Credentials Summary</h2>
+
+      <table class="cred-table">
+        <tr>
+          <th>Role</th>
+          <th>Login URL</th>
+          <th>Username / ID</th>
+          <th>Password</th>
+        </tr>
+        <tr>
+          <td>🧑‍⚕️ Dr. Humayun Aleem</td>
+          <td><code>/doctor-login.html</code></td>
+          <td><code>drhumayun</code></td>
+          <td>Set in Supabase SQL</td>
+        </tr>
+        <tr>
+          <td>👩‍⚕️ Dr. Ameena Tabassum</td>
+          <td><code>/doctor-login.html</code></td>
+          <td><code>drameena</code></td>
+          <td>Set in Supabase SQL</td>
+        </tr>
+        <tr>
+          <td>🛡️ Admin Staff</td>
+          <td><code>/admin-login.html</code></td>
+          <td><code>admin01</code></td>
+          <td>Set in Supabase SQL</td>
+        </tr>
+      </table>
+
+      <div class="info-box orange">
+        <strong>⚠️ To Change a Password</strong>
+        Run the following in Supabase SQL Editor (replace
+        <code>YourNewPassword</code> and <code>user_code</code>): <br /><br />
+        <code
+          >UPDATE doctors SET password_hash = encode(digest('YourNewPassword',
+          'sha256'), 'hex') WHERE doctor_code = 'drhumayun';</code
+        >
+        <br />
+        <code
+          >UPDATE admins SET password_hash = encode(digest('YourNewPassword',
+          'sha256'), 'hex') WHERE admin_code = 'admin01';</code
+        >
+      </div>
+
+      <hr class="divider" />
+
+      <!-- 8. SUPPORT -->
+      <h2 class="section-title">8. Support &amp; Troubleshooting</h2>
+
+      <h3 class="sub-title">Common Issues</h3>
+
+      <h4 class="mini-title">❌ WhatsApp pop-up blocked</h4>
+      <p>
+        The browser is blocking the WhatsApp tab from opening. Go to browser
+        Settings → allow pop-ups for this website, then try again.
+      </p>
+
+      <h4 class="mini-title">❌ "Assign Admin" showing error</h4>
+      <p>
+        The Supabase database may be missing the new columns. Run the migration
+        SQL from <code>supabase-schema.sql</code> in the Supabase SQL Editor.
+      </p>
+
+      <h4 class="mini-title">❌ Login not working</h4>
+      <p>
+        Ensure the Supabase project is active and the <code>doctors</code> /
+        <code>admins</code> tables have the correct records. Verify the password
+        matches what was set in the SQL INSERT statement.
+      </p>
+
+      <h4 class="mini-title">❌ Enquiries not appearing in dashboard</h4>
+      <p>
+        Check that the RLS (Row Level Security) policies are applied in
+        Supabase. Re-run the policy section of <code>supabase-schema.sql</code>.
+      </p>
+
+      <h3 class="sub-title">Technical Details</h3>
+      <ul class="check-list">
+        <li>
+          <strong>Frontend:</strong> Pure HTML5, CSS3, Vanilla JavaScript (no
+          frameworks)
+        </li>
+        <li>
+          <strong>Database:</strong> Supabase (PostgreSQL) — project:
+          <code>mgatkllhwudtqwqiznra.supabase.co</code>
+        </li>
+        <li>
+          <strong>Authentication:</strong> SHA-256 password hashing via Web
+          Crypto API + Supabase query
+        </li>
+        <li>
+          <strong>Hosting:</strong> Netlify (auto-deploy from GitHub on every
+          push)
+        </li>
+        <li>
+          <strong>Repository:</strong> GitHub —
+          <code>rkvelpsg-cyber/teethcaredentalbangalore</code>
+        </li>
+        <li><strong>Excel Export:</strong> SheetJS library (CDN)</li>
+        <li><strong>Icons:</strong> Font Awesome 6</li>
+      </ul>
+
+      <!-- FOOTER -->
+      <div class="doc-footer">
+        <span
+          >Asian Dental Clinic &amp; Implant Center, Hoskote, Bengaluru</span
+        >
+        <span>User Guide v1.0 — July 2026</span>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1045,6 +1045,9 @@ textarea:focus-visible {
 }
 .why-about-media {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 .why-media-frame {
   position: relative;
@@ -1055,7 +1058,7 @@ textarea:focus-visible {
 .why-media-frame img {
   width: 100%;
   height: 100%;
-  min-height: 520px;
+  min-height: 255px;
   object-fit: cover;
 }
 .why-media-quote {
@@ -1983,7 +1986,7 @@ textarea:focus-visible {
     gap: 48px;
   }
   .why-media-frame img {
-    min-height: 460px;
+    min-height: 220px;
   }
   .why-proof-badge {
     left: 20px;
@@ -2116,7 +2119,7 @@ textarea:focus-visible {
     font-size: clamp(1.8rem, 8vw, 2.5rem);
   }
   .why-media-frame img {
-    min-height: 360px;
+    min-height: 180px;
   }
   .why-media-quote {
     font-size: 0.9rem;
